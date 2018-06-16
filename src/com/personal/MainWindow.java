@@ -21,18 +21,26 @@ public class MainWindow extends JFrame
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuFile = new JMenu("File");
+        JMenu menuEdit = new JMenu("Edit");
         JMenu menuHelp = new JMenu("Help");
 
         JMenuItem menuItemQuit = new JMenuItem("Quit");
+        JMenuItem menuItemCut = new JMenuItem("Cut");
+        JMenuItem menuItemCopy = new JMenuItem("Copy");
+        JMenuItem menuItemPaste = new JMenuItem("Paste");
         JMenuItem menuItemAbout = new JMenuItem("About");
 
         menuFile.add(menuItemQuit);
+        menuEdit.add(menuItemCut);
+        menuEdit.add(menuItemCopy);
+        menuEdit.add(menuItemPaste);
         menuHelp.add(menuItemAbout);
-        
-        menuBar.add(menuFile);
-        menuBar.add(menuHelp);
-        setJMenuBar(menuBar);
 
+        menuBar.add(menuFile);
+        menuBar.add(menuEdit);
+        menuBar.add(menuHelp);
+
+        setJMenuBar(menuBar);
         JPanel mainPanel = new MainPanel();
         getContentPane().add(mainPanel);
     }
