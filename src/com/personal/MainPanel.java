@@ -2,7 +2,6 @@ package com.personal;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JTextArea;
 
 public class MainPanel extends JPanel
 {
@@ -12,8 +11,8 @@ public class MainPanel extends JPanel
     {
         super();
 
-        setLayout(new BorderLayout());
         TextEditor textEditor = new TextEditor();
+        setLayout(new BorderLayout());
         add(textEditor, BorderLayout.CENTER);
     }
 }
