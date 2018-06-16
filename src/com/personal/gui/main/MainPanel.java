@@ -6,8 +6,6 @@ import com.personal.gui.main.TextEditor;
 
 public class MainPanel extends JPanel
 {
-    TextEditor privateTextEditor = null;
-
     public MainPanel()
     {
         super();
