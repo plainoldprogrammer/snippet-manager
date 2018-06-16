@@ -2,6 +2,7 @@ package com.personal;
 
 import java.awt.EventQueue;
 import javax.swing.UIManager;
+import com.personal.gui.main.MainWindow;
 
 public class Program implements Runnable
 {
