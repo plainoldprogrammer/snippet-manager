@@ -24,17 +24,25 @@ public class MainWindow extends JFrame
         JMenu menuEdit = new JMenu("Edit");
         JMenu menuHelp = new JMenu("Help");
 
+        JMenuItem menuItemAbout = new JMenuItem("About");
+        JMenuItem menuItemPreferences = new JMenuItem("Preferences");
         JMenuItem menuItemQuit = new JMenuItem("Quit");
+
         JMenuItem menuItemCut = new JMenuItem("Cut");
         JMenuItem menuItemCopy = new JMenuItem("Copy");
         JMenuItem menuItemPaste = new JMenuItem("Paste");
-        JMenuItem menuItemAbout = new JMenuItem("About");
 
+        JMenuItem menuItemHelp = new JMenuItem("Snippet Manager Help");
+
+        menuFile.add(menuItemAbout);
+        menuFile.add(menuItemPreferences);
         menuFile.add(menuItemQuit);
+
         menuEdit.add(menuItemCut);
         menuEdit.add(menuItemCopy);
         menuEdit.add(menuItemPaste);
-        menuHelp.add(menuItemAbout);
+
+        menuHelp.add(menuItemHelp);
 
         menuBar.add(menuFile);
         menuBar.add(menuEdit);

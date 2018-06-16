@@ -1,6 +1,7 @@
 package com.personal;
 
 import java.awt.EventQueue;
+import javax.swing.UIManager;
 
 public class Program implements Runnable
 {
@@ -12,7 +13,15 @@ public class Program implements Runnable
     @Override
     public void run()
     {
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         MainWindow mainWindow = new MainWindow();
         mainWindow.setVisible(true);
     }
 }
+
