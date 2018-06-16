@@ -3,6 +3,7 @@ package com.personal.gui.main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
+import javax.swing.JScrollPane;
 import com.personal.gui.main.menubar.MenuBar;
 
 public class MainWindow extends JFrame
@@ -22,7 +23,7 @@ public class MainWindow extends JFrame
         setJMenuBar(menuBar);
 
         JPanel mainPanel = new MainPanel();
-        getContentPane().add(mainPanel);
+        getContentPane().add(new JScrollPane(mainPanel));
     }
 }
 
