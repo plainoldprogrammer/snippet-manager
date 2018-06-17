@@ -12,13 +12,12 @@ public class MenuItemSelectAll extends JMenuItem
     public MenuItemSelectAll(JTextArea textEditor)
     {
         super();
-
         this.textEditor = textEditor;
-
         setText("Select All");
 
         addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 textEditor.selectAll();
