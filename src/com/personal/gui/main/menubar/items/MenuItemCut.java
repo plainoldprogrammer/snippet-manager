@@ -24,3 +24,4 @@ public class MenuItemCut extends JMenuItem
         });
     }
 }
+

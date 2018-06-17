@@ -31,7 +31,7 @@ public class MenuBar extends JMenuBar
         menuFile.add(new MenuItemQuit());
 
         menuEdit.add(new MenuItemCut(textEditor));
-        menuEdit.add(new MenuItemCopy());
+        menuEdit.add(new MenuItemCopy(textEditor));
         menuEdit.add(new MenuItemPaste());
         menuEdit.add(new MenuItemSelectAll(textEditor));
 
