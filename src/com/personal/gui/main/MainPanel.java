@@ -6,9 +6,21 @@ import javax.swing.JList;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.ListIterator;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 
 public class MainPanel extends JPanel
 {
+    private List<String> listLanguagesData;
+    private JList<String> languagesList;
+
     public MainPanel()
     {
         super();
@@ -23,8 +35,11 @@ public class MainPanel extends JPanel
 
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
-        String[] listLanguagesData = {"C++", "Java", "JavaScript"};
-        JList<String> languagesList = new JList<String>(listLanguagesData);
+        listLanguagesData = new ArrayList();
+        listLanguagesData.add("C");
+        listLanguagesData.add("C++");
+        listLanguagesData.add("C#");
+        languagesList = new JList(listLanguagesData.toArray());
         languagesList.setBackground(Color.GRAY);
         panelCategories.add(languagesList, BorderLayout.CENTER);
         panelCategories.add(categoriesOptionsPanel, BorderLayout.SOUTH);
@@ -33,8 +48,8 @@ public class MainPanel extends JPanel
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());
         snippetsOptionPanel.setBackground(Color.LIGHT_GRAY);
-        JButton addSnippetButton = new JButton("s");
-        JButton removeSnippetButton = new JButton("s");
+        JButton addSnippetButton = new JButton("+");
+        JButton removeSnippetButton = new JButton("-");
         snippetsOptionPanel.add(addSnippetButton, BorderLayout.NORTH);
         snippetsOptionPanel.add(removeSnippetButton, BorderLayout.SOUTH);
 
@@ -56,6 +71,52 @@ public class MainPanel extends JPanel
         setLayout(new BorderLayout());
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
         add(new JScrollPane(textEditor), BorderLayout.CENTER);
+
+        addCategorieButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Button pressed");
+
+                JFrame createNewCategorieWindow = new JFrame();
+                createNewCategorieWindow.setLayout(new BorderLayout());
+
+                JTextField newCategorieNameTextField = new JTextField();
+                createNewCategorieWindow.add(newCategorieNameTextField, BorderLayout.CENTER);
+
+                JButton confirmNewCategorieButton = new JButton("Accept");
+                confirmNewCategorieButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        System.out.println("New category: " + newCategorieNameTextField.getText());
+                        listLanguagesData.add(newCategorieNameTextField.getText());
+
+                        System.out.print("All categories: ");
+                        ListIterator<String> iterator = listLanguagesData.listIterator();
+
+                        DefaultListModel model = new DefaultListModel();
+
+                        while (iterator.hasNext())
+                        {
+                            String currentCategory = iterator.next();
+                            System.out.print(" " + currentCategory);
+                            model.addElement(currentCategory);
+                        }
+
+                        languagesList.setModel(model);
+
+                        System.out.println();
+                        createNewCategorieWindow.setVisible(false);
+                    }
+                });
+
+                createNewCategorieWindow.add(confirmNewCategorieButton, BorderLayout.SOUTH);
+                createNewCategorieWindow.pack();
+                createNewCategorieWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                createNewCategorieWindow.setLocationRelativeTo(null);
+                createNewCategorieWindow.setVisible(true);
+            }
+        });
     }
 }
 
