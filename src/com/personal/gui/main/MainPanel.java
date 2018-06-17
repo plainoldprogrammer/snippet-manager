@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JList;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 
 public class MainPanel extends JPanel
 {
@@ -54,7 +55,7 @@ public class MainPanel extends JPanel
         TextEditor textEditor = new TextEditor();
         setLayout(new BorderLayout());
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
-        add(textEditor, BorderLayout.CENTER);
+        add(new JScrollPane(textEditor), BorderLayout.CENTER);
     }
 }
 
