@@ -112,7 +112,7 @@ public class MainPanel extends JPanel
 
                 createNewCategorieWindow.add(confirmNewCategorieButton, BorderLayout.SOUTH);
                 createNewCategorieWindow.pack();
-                createNewCategorieWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                createNewCategorieWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 createNewCategorieWindow.setLocationRelativeTo(null);
                 createNewCategorieWindow.setVisible(true);
             }
