@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextArea;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 public class MainPanel extends JPanel
 {
     final Logger logger = LogManager.getLogger(MainPanel.class);
+    private JTextArea textEditor = null;
     private List<String> listLanguagesData;
     private JList<String> languagesList;
 
@@ -69,7 +71,7 @@ public class MainPanel extends JPanel
         categoriesAndSnippetsPanel.add(panelCategories, BorderLayout.WEST);
         categoriesAndSnippetsPanel.add(panelSnippets, BorderLayout.EAST);
 
-        TextEditor textEditor = new TextEditor();
+        textEditor = new TextEditor();
         setLayout(new BorderLayout());
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
         add(new JScrollPane(textEditor), BorderLayout.CENTER);
@@ -136,6 +138,11 @@ public class MainPanel extends JPanel
                 languagesList.setModel(model);
             }
         });
+    }
+
+    public JTextArea getTextEditor()
+    {
+        return this.textEditor;
     }
 }
 
