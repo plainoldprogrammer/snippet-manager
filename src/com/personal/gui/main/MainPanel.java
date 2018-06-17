@@ -28,10 +28,10 @@ public class MainPanel extends JPanel
         JPanel categoriesOptionsPanel = new JPanel();
         categoriesOptionsPanel.setLayout(new BorderLayout());
         categoriesOptionsPanel.setBackground(Color.GRAY);
-        JButton addCategorieButton = new JButton("+");
-        JButton removeCategorieButton = new JButton("-");
-        categoriesOptionsPanel.add(addCategorieButton, BorderLayout.NORTH);
-        categoriesOptionsPanel.add(removeCategorieButton, BorderLayout.SOUTH);
+        JButton addCategoryButton = new JButton("+");
+        JButton removeCategoryButton = new JButton("-");
+        categoriesOptionsPanel.add(addCategoryButton, BorderLayout.NORTH);
+        categoriesOptionsPanel.add(removeCategoryButton, BorderLayout.SOUTH);
 
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
@@ -72,7 +72,7 @@ public class MainPanel extends JPanel
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
         add(new JScrollPane(textEditor), BorderLayout.CENTER);
 
-        addCategorieButton.addActionListener(new ActionListener()
+        addCategoryButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
