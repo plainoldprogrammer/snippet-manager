@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import javax.swing.DefaultListModel;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class MainPanel extends JPanel
 {
+    final Logger logger = LogManager.getLogger(MainPanel.class);
     private List<String> listLanguagesData;
     private JList<String> languagesList;
 
@@ -88,19 +91,18 @@ public class MainPanel extends JPanel
                     {
                         listLanguagesData.add(newCategorieNameTextField.getText());
 
-                        System.out.print("List after add a category:");
+                        logger.info("List after add a category:");
                         DefaultListModel model = new DefaultListModel();
                         ListIterator<String> iterator = listLanguagesData.listIterator();
 
                         while (iterator.hasNext())
                         {
                             String currentCategory = iterator.next();
-                            System.out.print(" " + currentCategory);
                             model.addElement(currentCategory);
+                            logger.info(" " + currentCategory);
                         }
 
                         languagesList.setModel(model);
-                        System.out.println();
                         createNewCategorieWindow.setVisible(false);
                     }
                 });
@@ -120,7 +122,7 @@ public class MainPanel extends JPanel
                 int selectedCategory = languagesList.getSelectedIndex();
                 listLanguagesData.remove(selectedCategory);
 
-                System.out.print("List after remove a category:");
+                logger.info("List after remove a category:");
                 DefaultListModel model = new DefaultListModel();
                 ListIterator<String> iterator = listLanguagesData.listIterator();
 
@@ -128,11 +130,10 @@ public class MainPanel extends JPanel
                 {
                     String currentCategory = iterator.next();
                     model.addElement(currentCategory);
-                    System.out.print(" " + currentCategory);
+                    logger.info(" " + currentCategory);
                 }
 
                 languagesList.setModel(model);
-                System.out.println();
             }
         });
     }

@@ -2,4 +2,6 @@
 .idea
 snippet-manager.iml
 out/
+lib/
+doc/
 
