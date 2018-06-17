@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 
 public class MainPanel extends JPanel
 {
@@ -76,8 +75,6 @@ public class MainPanel extends JPanel
         {
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Button pressed");
-
                 JFrame createNewCategorieWindow = new JFrame();
                 createNewCategorieWindow.setLayout(new BorderLayout());
 
@@ -86,15 +83,14 @@ public class MainPanel extends JPanel
 
                 JButton confirmNewCategorieButton = new JButton("Accept");
                 confirmNewCategorieButton.addActionListener(new ActionListener(){
+                    @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        System.out.println("New category: " + newCategorieNameTextField.getText());
                         listLanguagesData.add(newCategorieNameTextField.getText());
 
-                        System.out.print("All categories: ");
-                        ListIterator<String> iterator = listLanguagesData.listIterator();
-
+                        System.out.print("List after add a category:");
                         DefaultListModel model = new DefaultListModel();
+                        ListIterator<String> iterator = listLanguagesData.listIterator();
 
                         while (iterator.hasNext())
                         {
@@ -104,7 +100,6 @@ public class MainPanel extends JPanel
                         }
 
                         languagesList.setModel(model);
-
                         System.out.println();
                         createNewCategorieWindow.setVisible(false);
                     }
@@ -115,6 +110,29 @@ public class MainPanel extends JPanel
                 createNewCategorieWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 createNewCategorieWindow.setLocationRelativeTo(null);
                 createNewCategorieWindow.setVisible(true);
+            }
+        });
+
+        removeCategoryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                int selectedCategory = languagesList.getSelectedIndex();
+                listLanguagesData.remove(selectedCategory);
+
+                System.out.print("List after remove a category:");
+                DefaultListModel model = new DefaultListModel();
+                ListIterator<String> iterator = listLanguagesData.listIterator();
+
+                while (iterator.hasNext())
+                {
+                    String currentCategory = iterator.next();
+                    model.addElement(currentCategory);
+                    System.out.print(" " + currentCategory);
+                }
+
+                languagesList.setModel(model);
+                System.out.println();
             }
         });
     }
