@@ -224,6 +224,29 @@ public class MainPanel extends JPanel
             }
         });
 
+        addSnippetButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Category selectedCategory = listOfCategories.getSelectedValue();
+                Snippet newSnippet = new Snippet("New Snippet", "");
+                selectedCategory.addSnippet(newSnippet);
+
+                DefaultListModel<Snippet> model = new DefaultListModel();
+                ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
+
+                while (iterator.hasNext())
+                {
+                    Snippet currentSnippet = iterator.next();
+                    model.addElement(currentSnippet);
+                }
+
+                listOfSnippets.setModel(model);
+                textEditor.setText("");
+            }
+        });
+
         removeSnippetButton.addActionListener(new ActionListener()
         {
             @Override
@@ -238,7 +261,7 @@ public class MainPanel extends JPanel
 
                 while (iterator.hasNext())
                 {
-                    Snippet currentSnippet =iterator.next();
+                    Snippet currentSnippet = iterator.next();
                     model.addElement(currentSnippet);
                 }
 
