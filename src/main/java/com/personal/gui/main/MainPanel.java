@@ -17,6 +17,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import com.personal.util.Category;
@@ -39,6 +41,9 @@ public class MainPanel extends JPanel
 
         // Panel of the categories.
 
+        JLabel categoriesLabel = new JLabel("All Categories");
+        categoriesLabel.setFont(new Font("monospaced", Font.BOLD, 12));
+
         JPanel categoriesOptionsPanel = new JPanel();
         categoriesOptionsPanel.setLayout(new BorderLayout());
         categoriesOptionsPanel.setBackground(new Color(216, 216, 216));
@@ -49,6 +54,7 @@ public class MainPanel extends JPanel
 
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
+        panelCategories.setBackground(new Color(216, 216, 216));
         listCategoriesData = new ArrayList<>();
         Category category1 = new Category("C");
         Category category2 = new Category("Java");
@@ -58,6 +64,7 @@ public class MainPanel extends JPanel
         listCategoriesData.add(category3);
         listOfCategories = new JList(listCategoriesData.toArray());
         listOfCategories.setBackground(new Color(216, 216, 216));
+        panelCategories.add(categoriesLabel, BorderLayout.NORTH);
         panelCategories.add(listOfCategories, BorderLayout.CENTER);
         panelCategories.add(categoriesOptionsPanel, BorderLayout.SOUTH);
 
