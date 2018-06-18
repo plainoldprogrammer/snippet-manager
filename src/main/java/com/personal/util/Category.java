@@ -45,5 +45,10 @@ public class Category
     {
         return title;
     }
+
+    public void addSnippet(Snippet newSnippet)
+    {
+        listOfSnippets.add(newSnippet);
+    }
 }
 

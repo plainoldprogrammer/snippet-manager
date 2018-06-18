@@ -30,5 +30,11 @@ public class Snippet
     {
         return code;
     }
+
+    @Override
+    public String toString()
+    {
+        return title;
+    }
 }
 

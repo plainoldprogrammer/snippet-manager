@@ -18,13 +18,16 @@ import javax.swing.JTextArea;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import com.personal.util.Category;
+import com.personal.util.Snippet;
 
 public class MainPanel extends JPanel
 {
     final Logger logger = LogManager.getLogger(MainPanel.class);
     private JTextArea textEditor = null;
-    private List<Category> listLanguagesData;
-    private JList<String> languagesList;
+    private List<Category> listCategoriesData;
+    private JList<Category> listOfCategories;
+    private List<Snippet> listSnippetsData;
+    private JList<Snippet> listOfSnippets;
 
     public MainPanel()
     {
@@ -40,13 +43,16 @@ public class MainPanel extends JPanel
 
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
-        listLanguagesData = new ArrayList<>();
-        listLanguagesData.add(new Category("JSon"));
-        listLanguagesData.add(new Category("Objective-C"));
-        listLanguagesData.add(new Category("F#"));
-        languagesList = new JList(listLanguagesData.toArray());
-        languagesList.setBackground(new Color(216, 216, 216));
-        panelCategories.add(languagesList, BorderLayout.CENTER);
+        listCategoriesData = new ArrayList<>();
+        Category category1 = new Category("C");
+        Category category2 = new Category("Java");
+        Category category3 = new Category("html");
+        listCategoriesData.add(category1);
+        listCategoriesData.add(category2);
+        listCategoriesData.add(category3);
+        listOfCategories = new JList(listCategoriesData.toArray());
+        listOfCategories.setBackground(new Color(216, 216, 216));
+        panelCategories.add(listOfCategories, BorderLayout.CENTER);
         panelCategories.add(categoriesOptionsPanel, BorderLayout.SOUTH);
 
 
@@ -60,10 +66,19 @@ public class MainPanel extends JPanel
 
         JPanel panelSnippets = new JPanel();
         panelSnippets.setLayout(new BorderLayout());
-        String[] listSnippetsData = {"Hello World In Java", "Loop in C++", "Print JavaScript log"};
-        JList<String> snippetsList = new JList<String>(listSnippetsData);
-        snippetsList.setBackground(new Color(236, 236, 236));
-        panelSnippets.add(snippetsList, BorderLayout.CENTER);
+        Snippet snippet1 = new Snippet("Hello world", "");
+        Snippet snippet2 = new Snippet("Get time", "");
+        Snippet snippet3 = new Snippet("How to define a macro", "");
+        category1.addSnippet(snippet1);
+        category1.addSnippet(snippet2);
+        category1.addSnippet(snippet3);
+        listSnippetsData = new ArrayList<>();
+        listSnippetsData.add(snippet1);
+        listSnippetsData.add(snippet2);
+        listSnippetsData.add(snippet3);
+        listOfSnippets = new JList(listSnippetsData.toArray());
+        listOfSnippets.setBackground(new Color(236, 236, 236));
+        panelSnippets.add(listOfSnippets, BorderLayout.CENTER);
         panelSnippets.add(snippetsOptionPanel, BorderLayout.SOUTH);
 
 
@@ -92,11 +107,11 @@ public class MainPanel extends JPanel
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        listLanguagesData.add(new Category(newCategorieNameTextField.getText()));
+                        listCategoriesData.add(new Category(newCategorieNameTextField.getText()));
 
                         logger.info("List after add a category:");
                         DefaultListModel model = new DefaultListModel();
-                        ListIterator<Category> iterator = listLanguagesData.listIterator();
+                        ListIterator<Category> iterator = listCategoriesData.listIterator();
 
                         while (iterator.hasNext())
                         {
@@ -105,7 +120,7 @@ public class MainPanel extends JPanel
                             logger.info(" " + currentCategory);
                         }
 
-                        languagesList.setModel(model);
+                        listOfCategories.setModel(model);
                         createNewCategorieWindow.setVisible(false);
                     }
                 });
@@ -122,12 +137,12 @@ public class MainPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int selectedCategory = languagesList.getSelectedIndex();
-                listLanguagesData.remove(selectedCategory);
+                int selectedCategory = listOfCategories.getSelectedIndex();
+                listCategoriesData.remove(selectedCategory);
 
                 logger.info("List after remove a category:");
                 DefaultListModel model = new DefaultListModel();
-                ListIterator<Category> iterator = listLanguagesData.listIterator();
+                ListIterator<Category> iterator = listCategoriesData.listIterator();
 
                 while (iterator.hasNext())
                 {
@@ -136,7 +151,7 @@ public class MainPanel extends JPanel
                     logger.info(" " + currentCategory);
                 }
 
-                languagesList.setModel(model);
+                listOfCategories.setModel(model);
             }
         });
     }
