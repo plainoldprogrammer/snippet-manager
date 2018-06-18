@@ -31,7 +31,7 @@ public class MainPanel extends JPanel
 
         JPanel categoriesOptionsPanel = new JPanel();
         categoriesOptionsPanel.setLayout(new BorderLayout());
-        categoriesOptionsPanel.setBackground(Color.GRAY);
+        categoriesOptionsPanel.setBackground(new Color(216, 216, 216));
         JButton addCategoryButton = new JButton("+");
         JButton removeCategoryButton = new JButton("-");
         categoriesOptionsPanel.add(addCategoryButton, BorderLayout.NORTH);
@@ -44,14 +44,14 @@ public class MainPanel extends JPanel
         listLanguagesData.add("C++");
         listLanguagesData.add("C#");
         languagesList = new JList(listLanguagesData.toArray());
-        languagesList.setBackground(Color.GRAY);
+        languagesList.setBackground(new Color(216, 216, 216));
         panelCategories.add(languagesList, BorderLayout.CENTER);
         panelCategories.add(categoriesOptionsPanel, BorderLayout.SOUTH);
 
 
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());
-        snippetsOptionPanel.setBackground(Color.LIGHT_GRAY);
+        snippetsOptionPanel.setBackground(new Color(236, 236, 236));
         JButton addSnippetButton = new JButton("+");
         JButton removeSnippetButton = new JButton("-");
         snippetsOptionPanel.add(addSnippetButton, BorderLayout.NORTH);
@@ -61,7 +61,7 @@ public class MainPanel extends JPanel
         panelSnippets.setLayout(new BorderLayout());
         String[] listSnippetsData = {"Hello World In Java", "Loop in C++", "Print JavaScript log"};
         JList<String> snippetsList = new JList<String>(listSnippetsData);
-        snippetsList.setBackground(Color.LIGHT_GRAY);
+        snippetsList.setBackground(new Color(236, 236, 236));
         panelSnippets.add(snippetsList, BorderLayout.CENTER);
         panelSnippets.add(snippetsOptionPanel, BorderLayout.SOUTH);
 
