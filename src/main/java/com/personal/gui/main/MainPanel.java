@@ -36,6 +36,9 @@ public class MainPanel extends JPanel
     {
         super();
 
+
+        // Panel of the categories.
+
         JPanel categoriesOptionsPanel = new JPanel();
         categoriesOptionsPanel.setLayout(new BorderLayout());
         categoriesOptionsPanel.setBackground(new Color(216, 216, 216));
@@ -58,6 +61,8 @@ public class MainPanel extends JPanel
         panelCategories.add(listOfCategories, BorderLayout.CENTER);
         panelCategories.add(categoriesOptionsPanel, BorderLayout.SOUTH);
 
+
+        // Panel of the snippets.
 
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());
@@ -99,10 +104,15 @@ public class MainPanel extends JPanel
         panelSnippets.add(snippetsOptionPanel, BorderLayout.SOUTH);
 
 
+        // Panel that contains categories and snippets panel.
+
         JPanel categoriesAndSnippetsPanel = new JPanel();
         categoriesAndSnippetsPanel.setLayout(new BorderLayout());
         categoriesAndSnippetsPanel.add(panelCategories, BorderLayout.WEST);
         categoriesAndSnippetsPanel.add(panelSnippets, BorderLayout.EAST);
+
+
+        // Panel that contains the title and code of the selected snippet.
 
         setLayout(new BorderLayout());
         textEditor = new TextEditor();
@@ -111,9 +121,13 @@ public class MainPanel extends JPanel
         titleAndEditorPanel.setLayout(new BorderLayout());
         titleAndEditorPanel.add(new JScrollPane(textEditor), BorderLayout.CENTER);
         titleAndEditorPanel.add(titleOfSelectedSnippet, BorderLayout.NORTH);
-        
+
+
+        // Adding the two main panels to the main window.
+
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
         add(titleAndEditorPanel, BorderLayout.CENTER);
+
 
         addCategoryButton.addActionListener(new ActionListener()
         {
