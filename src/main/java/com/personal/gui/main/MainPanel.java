@@ -23,6 +23,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import com.personal.util.Category;
 import com.personal.util.Snippet;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 
 public class MainPanel extends JPanel
 {
@@ -66,7 +68,7 @@ public class MainPanel extends JPanel
         listOfCategories.setBackground(new Color(216, 216, 216));
         listOfCategories.setSelectedIndex(0);
         panelCategories.add(categoriesLabel, BorderLayout.NORTH);
-        panelCategories.add(listOfCategories, BorderLayout.CENTER);
+        panelCategories.add(new JScrollPane(listOfCategories), BorderLayout.CENTER);
         panelCategories.add(categoriesOptionsPanel, BorderLayout.SOUTH);
 
 
@@ -126,7 +128,7 @@ public class MainPanel extends JPanel
         }
 
         panelSnippets.add(snippetFilter, BorderLayout.NORTH);
-        panelSnippets.add(listOfSnippets, BorderLayout.CENTER);
+        panelSnippets.add(new JScrollPane(listOfSnippets), BorderLayout.CENTER);
         panelSnippets.add(snippetsOptionPanel, BorderLayout.SOUTH);
 
 
@@ -347,6 +349,28 @@ public class MainPanel extends JPanel
                 {
                     listOfSnippets.setSelectedIndex(0);
                 }
+            }
+        });
+
+        titleOfSelectedSnippet.getDocument().addDocumentListener(new DocumentListener()
+        {
+            @Override
+            public void changedUpdate(DocumentEvent e)
+            {
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e)
+            {
+                logger.info("snippet title changed: " + titleOfSelectedSnippet.getText());
+                listOfSnippets.getSelectedValue().setTitle(titleOfSelectedSnippet.getText());
+                listOfSnippets.updateUI();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e)
+            {
+                insertUpdate(e);
             }
         });
     }
