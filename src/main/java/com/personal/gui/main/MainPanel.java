@@ -85,15 +85,15 @@ public class MainPanel extends JPanel
 
         JPanel panelSnippets = new JPanel();
         panelSnippets.setLayout(new BorderLayout());
-        Snippet snippet1 = new Snippet("Hello world", "");
-        Snippet snippet2 = new Snippet("Get time", "");
-        Snippet snippet3 = new Snippet("How to define a macro", "");
-        Snippet snippet4 = new Snippet("Hello world java", "");
-        Snippet snippet5 = new Snippet("Get current time", "");
-        Snippet snippet6 = new Snippet("Set utf", "");
-        Snippet snippet7 = new Snippet("Create a sub-div", "");
-        Snippet snippet8 = new Snippet("Generate a form", "");
-        Snippet snippet9 = new Snippet("Implement text input", "");
+        Snippet snippet1 = new Snippet("Hello world", "#include <std.io>");
+        Snippet snippet2 = new Snippet("Get time", "system(time)");
+        Snippet snippet3 = new Snippet("How to define a macro", "private const MY_VALUE");
+        Snippet snippet4 = new Snippet("Hello world java", "public static void main(args[])");
+        Snippet snippet5 = new Snippet("Get current time", "getCurrentMillisTime()");
+        Snippet snippet6 = new Snippet("Set utf", "setUTFCharset('utf')");
+        Snippet snippet7 = new Snippet("Create a sub-div", "<div><div></div></div>");
+        Snippet snippet8 = new Snippet("Generate a form", "<form><form>");
+        Snippet snippet9 = new Snippet("Implement text input", "<input name=''>/");
         category1.addSnippet(snippet1);
         category1.addSnippet(snippet2);
         category1.addSnippet(snippet3);
@@ -251,6 +251,9 @@ public class MainPanel extends JPanel
                 if (!e.getValueIsAdjusting())
                 {
                     removeSnippetButton.setEnabled(true);
+
+                    titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                    textEditor.setText(listOfSnippets.getSelectedValue().getCode());
                 }
             }
         });
