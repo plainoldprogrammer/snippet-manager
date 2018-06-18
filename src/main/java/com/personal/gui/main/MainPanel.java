@@ -63,6 +63,8 @@ public class MainPanel extends JPanel
         snippetsOptionPanel.setBackground(new Color(236, 236, 236));
         JButton addSnippetButton = new JButton("+");
         JButton removeSnippetButton = new JButton("-");
+        addSnippetButton.setEnabled(false);
+        removeSnippetButton.setEnabled(false);
         snippetsOptionPanel.add(addSnippetButton, BorderLayout.NORTH);
         snippetsOptionPanel.add(removeSnippetButton, BorderLayout.SOUTH);
 
@@ -136,6 +138,10 @@ public class MainPanel extends JPanel
 
                         listOfCategories.setModel(model);
                         createNewCategorieWindow.setVisible(false);
+                        removeCategoryButton.setEnabled(true);
+
+                        // the new category isn't selected in the gui and theres no one selected
+                        addSnippetButton.setEnabled(false);
                     }
                 });
 
@@ -166,6 +172,12 @@ public class MainPanel extends JPanel
                 }
 
                 listOfCategories.setModel(model);
+                addSnippetButton.setEnabled(false);
+
+                if (listCategoriesData.size() == 0)
+                {
+                    removeCategoryButton.setEnabled(false);
+                }
             }
         });
 
@@ -194,6 +206,7 @@ public class MainPanel extends JPanel
                         }
 
                         listOfSnippets.setModel(model);
+                        addSnippetButton.setEnabled(true);
                     }
                 }
             }
