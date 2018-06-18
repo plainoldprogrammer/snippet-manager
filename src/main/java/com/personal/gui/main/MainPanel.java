@@ -117,6 +117,7 @@ public class MainPanel extends JPanel
             {
                 listOfSnippets.setSelectedIndex(0);
                 removeSnippetButton.setEnabled(true);
+                addSnippetButton.setEnabled(true);
             }
         }
         else
@@ -317,6 +318,8 @@ public class MainPanel extends JPanel
 
                 listOfSnippets.setModel(model);
                 textEditor.setText("");
+                listOfSnippets.setSelectedIndex(listOfSnippets.getModel().getSize() - 1);
+                titleOfSelectedSnippet.grabFocus();
             }
         });
 
@@ -339,6 +342,11 @@ public class MainPanel extends JPanel
                 }
 
                 listOfSnippets.setModel(model);
+
+                if (listOfSnippets.getModel().getSize() > 0)
+                {
+                    listOfSnippets.setSelectedIndex(0);
+                }
             }
         });
     }
