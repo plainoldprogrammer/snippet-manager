@@ -17,12 +17,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import com.personal.util.Category;
 
 public class MainPanel extends JPanel
 {
     final Logger logger = LogManager.getLogger(MainPanel.class);
     private JTextArea textEditor = null;
-    private List<String> listLanguagesData;
+    private List<Category> listLanguagesData;
     private JList<String> languagesList;
 
     public MainPanel()
@@ -39,10 +40,10 @@ public class MainPanel extends JPanel
 
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
-        listLanguagesData = new ArrayList();
-        listLanguagesData.add("C");
-        listLanguagesData.add("C++");
-        listLanguagesData.add("C#");
+        listLanguagesData = new ArrayList<>();
+        listLanguagesData.add(new Category("JSon"));
+        listLanguagesData.add(new Category("Objective-C"));
+        listLanguagesData.add(new Category("F#"));
         languagesList = new JList(listLanguagesData.toArray());
         languagesList.setBackground(new Color(216, 216, 216));
         panelCategories.add(languagesList, BorderLayout.CENTER);
@@ -91,15 +92,15 @@ public class MainPanel extends JPanel
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        listLanguagesData.add(newCategorieNameTextField.getText());
+                        listLanguagesData.add(new Category(newCategorieNameTextField.getText()));
 
                         logger.info("List after add a category:");
                         DefaultListModel model = new DefaultListModel();
-                        ListIterator<String> iterator = listLanguagesData.listIterator();
+                        ListIterator<Category> iterator = listLanguagesData.listIterator();
 
                         while (iterator.hasNext())
                         {
-                            String currentCategory = iterator.next();
+                            Category currentCategory = iterator.next();
                             model.addElement(currentCategory);
                             logger.info(" " + currentCategory);
                         }
@@ -126,11 +127,11 @@ public class MainPanel extends JPanel
 
                 logger.info("List after remove a category:");
                 DefaultListModel model = new DefaultListModel();
-                ListIterator<String> iterator = listLanguagesData.listIterator();
+                ListIterator<Category> iterator = listLanguagesData.listIterator();
 
                 while (iterator.hasNext())
                 {
-                    String currentCategory = iterator.next();
+                    Category currentCategory = iterator.next();
                     model.addElement(currentCategory);
                     logger.info(" " + currentCategory);
                 }
