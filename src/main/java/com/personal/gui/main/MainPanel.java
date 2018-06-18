@@ -223,6 +223,12 @@ public class MainPanel extends JPanel
                 if (listCategoriesData.size() == 0)
                 {
                     removeCategoryButton.setEnabled(false);
+                    DefaultListModel emptyModel = new DefaultListModel();
+                    listOfSnippets.setModel(emptyModel);
+                }
+                else
+                {
+                    listOfCategories.setSelectedIndex(0);
                 }
             }
         });
@@ -253,6 +259,11 @@ public class MainPanel extends JPanel
 
                         listOfSnippets.setModel(model);
                         addSnippetButton.setEnabled(true);
+
+                        if (selectedCategory.getListOfSnippets().size() > 0)
+                        {
+                            listOfSnippets.setSelectedIndex(0);
+                        }
                     }
                 }
             }
