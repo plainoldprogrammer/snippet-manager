@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import com.personal.util.Category;
@@ -69,9 +71,21 @@ public class MainPanel extends JPanel
         Snippet snippet1 = new Snippet("Hello world", "");
         Snippet snippet2 = new Snippet("Get time", "");
         Snippet snippet3 = new Snippet("How to define a macro", "");
+        Snippet snippet4 = new Snippet("Hello world java", "");
+        Snippet snippet5 = new Snippet("Get current time", "");
+        Snippet snippet6 = new Snippet("Set utf", "");
+        Snippet snippet7 = new Snippet("Create a sub-div", "");
+        Snippet snippet8 = new Snippet("Generate a form", "");
+        Snippet snippet9 = new Snippet("Implement text input", "");
         category1.addSnippet(snippet1);
         category1.addSnippet(snippet2);
         category1.addSnippet(snippet3);
+        category2.addSnippet(snippet4);
+        category2.addSnippet(snippet5);
+        category3.addSnippet(snippet6);
+        category3.addSnippet(snippet7);
+        category3.addSnippet(snippet8);
+        category3.addSnippet(snippet9);
         listSnippetsData = new ArrayList<>();
         listSnippetsData.add(snippet1);
         listSnippetsData.add(snippet2);
@@ -152,6 +166,36 @@ public class MainPanel extends JPanel
                 }
 
                 listOfCategories.setModel(model);
+            }
+        });
+
+        listOfCategories.addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                if (!e.getValueIsAdjusting())
+                {
+                    Category selectedCategory = listOfCategories.getSelectedValue();
+
+                    // 'selectedCategory' could be null after removing the selected category.
+                    if (selectedCategory != null)
+                    {
+                        logger.info("selected category: " + selectedCategory);
+
+                        DefaultListModel<Snippet> model = new DefaultListModel();
+                        ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
+
+                        while (iterator.hasNext())
+                        {
+                            Snippet currentSnippet = iterator.next();
+                            model.addElement(currentSnippet);
+                            logger.info("snippet in the category '" + selectedCategory + "': " + currentSnippet);
+                        }
+
+                        listOfSnippets.setModel(model);
+                    }
+                }
             }
         });
     }
