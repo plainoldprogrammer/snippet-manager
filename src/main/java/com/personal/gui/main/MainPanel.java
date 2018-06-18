@@ -211,6 +211,40 @@ public class MainPanel extends JPanel
                 }
             }
         });
+
+        listOfSnippets.addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                if (!e.getValueIsAdjusting())
+                {
+                    removeSnippetButton.setEnabled(true);
+                }
+            }
+        });
+
+        removeSnippetButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Category selectedCategory = listOfCategories.getSelectedValue();
+                int index = listOfSnippets.getSelectedIndex();
+                selectedCategory.getListOfSnippets().remove(index);
+
+                DefaultListModel<Snippet> model = new DefaultListModel();
+                ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
+
+                while (iterator.hasNext())
+                {
+                    Snippet currentSnippet =iterator.next();
+                    model.addElement(currentSnippet);
+                }
+
+                listOfSnippets.setModel(model);
+            }
+        });
     }
 
     public JTextArea getTextEditor()
