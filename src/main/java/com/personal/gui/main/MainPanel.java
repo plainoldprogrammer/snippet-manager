@@ -64,6 +64,8 @@ public class MainPanel extends JPanel
 
         // Panel of the snippets.
 
+        JTextField snippetFilter = new JTextField("Filter");
+
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());
         snippetsOptionPanel.setBackground(new Color(236, 236, 236));
@@ -100,6 +102,7 @@ public class MainPanel extends JPanel
         listSnippetsData.add(snippet3);
         listOfSnippets = new JList(listSnippetsData.toArray());
         listOfSnippets.setBackground(new Color(236, 236, 236));
+        panelSnippets.add(snippetFilter, BorderLayout.NORTH);
         panelSnippets.add(listOfSnippets, BorderLayout.CENTER);
         panelSnippets.add(snippetsOptionPanel, BorderLayout.SOUTH);
 
