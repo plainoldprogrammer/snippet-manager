@@ -26,6 +26,7 @@ public class MainPanel extends JPanel
 {
     final Logger logger = LogManager.getLogger(MainPanel.class);
     private JTextArea textEditor = null;
+    private JTextField titleOfSelectedSnippet;
     private List<Category> listCategoriesData;
     private JList<Category> listOfCategories;
     private List<Snippet> listSnippetsData;
@@ -103,10 +104,16 @@ public class MainPanel extends JPanel
         categoriesAndSnippetsPanel.add(panelCategories, BorderLayout.WEST);
         categoriesAndSnippetsPanel.add(panelSnippets, BorderLayout.EAST);
 
-        textEditor = new TextEditor();
         setLayout(new BorderLayout());
+        textEditor = new TextEditor();
+        titleOfSelectedSnippet = new JTextField("Title Of Selected Snippet");
+        JPanel titleAndEditorPanel = new JPanel();
+        titleAndEditorPanel.setLayout(new BorderLayout());
+        titleAndEditorPanel.add(new JScrollPane(textEditor), BorderLayout.CENTER);
+        titleAndEditorPanel.add(titleOfSelectedSnippet, BorderLayout.NORTH);
+        
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
-        add(new JScrollPane(textEditor), BorderLayout.CENTER);
+        add(titleAndEditorPanel, BorderLayout.CENTER);
 
         addCategoryButton.addActionListener(new ActionListener()
         {
