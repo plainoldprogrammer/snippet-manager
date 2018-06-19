@@ -75,6 +75,7 @@ public class MainPanel extends JPanel
         // Panel of the snippets.
 
         JTextField snippetFilter = new JTextField("Filter");
+        titleOfSelectedSnippet = new JTextField("Title Of Selected Snippet");
 
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());
@@ -118,6 +119,7 @@ public class MainPanel extends JPanel
             if (listOfCategories.getSelectedValue().getListOfSnippets().size() >= 0)
             {
                 listOfSnippets.setSelectedIndex(0);
+                titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
                 removeSnippetButton.setEnabled(true);
                 addSnippetButton.setEnabled(true);
             }
@@ -144,7 +146,6 @@ public class MainPanel extends JPanel
 
         setLayout(new BorderLayout());
         textEditor = new TextEditor();
-        titleOfSelectedSnippet = new JTextField("Title Of Selected Snippet");
         JPanel titleAndEditorPanel = new JPanel();
         titleAndEditorPanel.setLayout(new BorderLayout());
         titleAndEditorPanel.add(new JScrollPane(textEditor), BorderLayout.CENTER);
