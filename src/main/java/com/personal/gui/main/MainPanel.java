@@ -286,6 +286,7 @@ public class MainPanel extends JPanel
 
                         if (!listOfSnippets.isSelectionEmpty())
                         {
+                            // prevent an infinite loop events between the 'titleOfSelectedSnippet' and 'listOfSnippets'
                             if (!titleOfSelectedSnippet.getText().equals(listOfSnippets.getSelectedValue().getTitle()))
                             {
                                 titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
