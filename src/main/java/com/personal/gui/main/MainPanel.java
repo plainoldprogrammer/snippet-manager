@@ -338,15 +338,18 @@ public class MainPanel extends JPanel
                 DefaultListModel<Snippet> model = new DefaultListModel();
                 ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
 
+
                 while (iterator.hasNext())
                 {
                     Snippet currentSnippet = iterator.next();
                     model.addElement(currentSnippet);
                 }
 
+                logger.info("model: " + model);
+
                 listOfSnippets.setModel(model);
 
-                if (listOfSnippets.getModel().getSize() > 0)
+                if ((listOfSnippets.getModel().getSize() > 0) && !(model.isEmpty()))
                 {
                     if (((indexOfRemovedSnippet - 1) == -1) && (listOfSnippets.getModel().getSize() > 0))
                     {
@@ -371,7 +374,11 @@ public class MainPanel extends JPanel
             public void insertUpdate(DocumentEvent e)
             {
                 logger.info("snippet title changed: " + titleOfSelectedSnippet.getText());
-                listOfSnippets.getSelectedValue().setTitle(titleOfSelectedSnippet.getText());
+
+                if (listOfSnippets.getModel().getSize() > 0)
+                {
+                    listOfSnippets.getSelectedValue().setTitle(titleOfSelectedSnippet.getText());
+                }
             }
 
             @Override
