@@ -286,7 +286,11 @@ public class MainPanel extends JPanel
 
                         if (!listOfSnippets.isSelectionEmpty())
                         {
-                            titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                            if (!titleOfSelectedSnippet.getText().equals(listOfSnippets.getSelectedValue().getTitle()))
+                            {
+                                titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                            }
+
                             textEditor.setText(listOfSnippets.getSelectedValue().getCode());
                         }
                     }
@@ -338,7 +342,6 @@ public class MainPanel extends JPanel
                 DefaultListModel<Snippet> model = new DefaultListModel();
                 ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
 
-
                 while (iterator.hasNext())
                 {
                     Snippet currentSnippet = iterator.next();
@@ -377,7 +380,29 @@ public class MainPanel extends JPanel
 
                 if (listOfSnippets.getModel().getSize() > 0)
                 {
+                    logger.info("inside");
+                    int indexSelectedSnippet = listOfSnippets.getSelectedIndex();
                     listOfSnippets.getSelectedValue().setTitle(titleOfSelectedSnippet.getText());
+
+                    Snippet selectedSnippet = listOfSnippets.getSelectedValue();
+                    selectedSnippet.setTitle(titleOfSelectedSnippet.getText());
+                    logger.info("new title for snippet: " + selectedSnippet.getTitle());
+
+                    Category selectedCategory = listOfCategories.getSelectedValue();
+
+                    DefaultListModel<Snippet> model = new DefaultListModel();
+                    ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
+
+                    while (iterator.hasNext())
+                    {
+                        Snippet currentSnippet = iterator.next();
+                        model.addElement(currentSnippet);
+                        logger.info("snippet: " + currentSnippet.getTitle());
+                    }
+
+                    logger.info("model: " + model);
+                    listOfSnippets.setModel(model);
+                    listOfSnippets.setSelectedIndex(indexSelectedSnippet);
                 }
             }
 
