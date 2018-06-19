@@ -3,6 +3,7 @@ package com.personal.gui.main.menubar;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JTextArea;
+import com.personal.gui.main.menubar.items.MenuItemSave;
 import com.personal.gui.main.menubar.items.MenuItemAbout;
 import com.personal.gui.main.menubar.items.MenuItemPreferences;
 import com.personal.gui.main.menubar.items.MenuItemQuit;
@@ -26,6 +27,7 @@ public class MenuBar extends JMenuBar
         JMenu menuEdit = new JMenu("Edit");
         JMenu menuHelp = new JMenu("Help");
 
+        menuFile.add(new MenuItemSave());
         menuFile.add(new MenuItemAbout());
         menuFile.add(new MenuItemPreferences());
         menuFile.add(new MenuItemQuit());
