@@ -264,7 +264,7 @@ public class MainPanel extends JPanel
                         listOfSnippets.setModel(model);
                         addSnippetButton.setEnabled(true);
 
-                        if (selectedCategory.getListOfSnippets().size() > 0)
+                        if (selectedCategory.getListOfSnippets().size() > 0 )
                         {
                             listOfSnippets.setSelectedIndex(0);
                         }
@@ -332,8 +332,8 @@ public class MainPanel extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 Category selectedCategory = listOfCategories.getSelectedValue();
-                int index = listOfSnippets.getSelectedIndex();
-                selectedCategory.getListOfSnippets().remove(index);
+                int indexOfRemovedSnippet = listOfSnippets.getSelectedIndex();
+                selectedCategory.getListOfSnippets().remove(indexOfRemovedSnippet);
 
                 DefaultListModel<Snippet> model = new DefaultListModel();
                 ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
@@ -348,7 +348,14 @@ public class MainPanel extends JPanel
 
                 if (listOfSnippets.getModel().getSize() > 0)
                 {
-                    listOfSnippets.setSelectedIndex(0);
+                    if (((indexOfRemovedSnippet - 1) == -1) && (listOfSnippets.getModel().getSize() > 0))
+                    {
+                        listOfSnippets.setSelectedIndex(0);
+                    }
+                    else
+                    {
+                        listOfSnippets.setSelectedIndex(indexOfRemovedSnippet - 1);
+                    }
                 }
             }
         });
