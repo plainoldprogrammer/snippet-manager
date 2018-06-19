@@ -372,7 +372,6 @@ public class MainPanel extends JPanel
             {
                 logger.info("snippet title changed: " + titleOfSelectedSnippet.getText());
                 listOfSnippets.getSelectedValue().setTitle(titleOfSelectedSnippet.getText());
-                listOfSnippets.updateUI();
             }
 
             @Override
