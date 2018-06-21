@@ -319,8 +319,8 @@ public class MainPanel extends JPanel
                 }
 
                 listOfSnippets.setModel(model);
-                textEditor.setText("");
                 listOfSnippets.setSelectedIndex(listOfSnippets.getModel().getSize() - 1);
+                textEditor.setText("");
                 titleOfSelectedSnippet.grabFocus();
                 logger.info("id of selected snippet: " + newSnippet.getId());
 
