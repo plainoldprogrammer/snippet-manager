@@ -162,18 +162,21 @@ public class MainPanel extends JPanel
         {
             public void actionPerformed(ActionEvent e)
             {
-                JFrame createNewCategorieWindow = new JFrame();
-                createNewCategorieWindow.setLayout(new BorderLayout());
+                JFrame createNewCategoryWindow = new JFrame();
+                createNewCategoryWindow.setLayout(new BorderLayout());
 
-                JTextField newCategorieNameTextField = new JTextField();
-                createNewCategorieWindow.add(newCategorieNameTextField, BorderLayout.CENTER);
+                JTextField newCategoryNameTextField = new JTextField();
+                createNewCategoryWindow.add(newCategoryNameTextField, BorderLayout.CENTER);
 
                 JButton confirmNewCategorieButton = new JButton("Accept");
+
                 confirmNewCategorieButton.addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        listCategoriesData.add(new Category(newCategorieNameTextField.getText()));
+                        Category theNewCategory = new Category(newCategoryNameTextField.getText());
+                        listCategoriesData.add(theNewCategory);
+                        int lastCategoryInserted = listCategoriesData.size() - 1;
 
                         logger.info("List after add a category:");
                         DefaultListModel model = new DefaultListModel();
@@ -187,7 +190,9 @@ public class MainPanel extends JPanel
                         }
 
                         listOfCategories.setModel(model);
-                        createNewCategorieWindow.setVisible(false);
+                        logger.info("index at last category inserted: " + lastCategoryInserted);
+                        listOfCategories.setSelectedIndex(lastCategoryInserted);
+                        createNewCategoryWindow.setVisible(false);
                         removeCategoryButton.setEnabled(true);
 
                         // the new category isn't selected in the gui and theres no one selected
@@ -195,11 +200,11 @@ public class MainPanel extends JPanel
                     }
                 });
 
-                createNewCategorieWindow.add(confirmNewCategorieButton, BorderLayout.SOUTH);
-                createNewCategorieWindow.pack();
-                createNewCategorieWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                createNewCategorieWindow.setLocationRelativeTo(null);
-                createNewCategorieWindow.setVisible(true);
+                createNewCategoryWindow.add(confirmNewCategorieButton, BorderLayout.SOUTH);
+                createNewCategoryWindow.pack();
+                createNewCategoryWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                createNewCategoryWindow.setLocationRelativeTo(null);
+                createNewCategoryWindow.setVisible(true);
             }
         });
 
@@ -261,7 +266,18 @@ public class MainPanel extends JPanel
                             logger.info("snippet in the category '" + selectedCategory + "': " + currentSnippet);
                         }
 
-                        listOfSnippets.setModel(model);
+                        logger.info("model: " + listOfSnippets.getModel());
+
+                        if (selectedCategory.getListOfSnippets().size() > 0)
+                        {
+                            listOfSnippets.setModel(model);
+                        }
+                        else if (model.isEmpty())
+                        {
+                            model.removeAllElements();
+                            listOfSnippets.setModel(model);
+                        }
+
                         addSnippetButton.setEnabled(true);
 
                         if (selectedCategory.getListOfSnippets().size() > 0 )
@@ -484,18 +500,21 @@ public class MainPanel extends JPanel
             {
                 logger.info("Snippet code change to: " + textEditor.getText());
 
-                Snippet selectedSnippet = listOfSnippets.getSelectedValue();
-                int idOfSelectedSnippet = selectedSnippet.getId();
-                String currentSnippet = textEditor.getText();
+                if (listOfSnippets.getModel().getSize() > 0)
+                {
+                    Snippet selectedSnippet = listOfSnippets.getSelectedValue();
+                    int idOfSelectedSnippet = selectedSnippet.getId();
+                    String currentSnippet = textEditor.getText();
 
-                try
-                {
-                    JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
-                    jdbcSqliteConnection.updateCodeSnippet(idOfSelectedSnippet, currentSnippet);
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
+                    try
+                    {
+                        JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                        jdbcSqliteConnection.updateCodeSnippet(idOfSelectedSnippet, currentSnippet);
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
                 }
             }
 
