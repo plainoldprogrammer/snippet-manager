@@ -3,9 +3,7 @@ package com.personal.gui.main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
-import javax.swing.JTextArea;
 import com.personal.gui.main.menubar.MenuBar;
-import com.personal.gui.main.MainPanel;
 
 public class MainWindow extends JFrame
 {
