@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.ArrayList;
 import com.personal.util.Snippet;
@@ -50,7 +51,7 @@ public class JdbcSqliteConnection
                     logger.info(categoryName);
                     Category currentCategory = new Category(categoryName);
 
-                    String sqlQueryForSnippetsOfACategory = "SELECT title, snippet FROM snippets WHERE category = '" + categoryName + "'";
+                    String sqlQueryForSnippetsOfACategory = "SELECT id, title, snippet FROM snippets WHERE category = '" + categoryName + "'";
                     logger.info(sqlQueryForSnippetsOfACategory);
 
                     Statement statementForSnippets = connection.createStatement();
@@ -60,14 +61,19 @@ public class JdbcSqliteConnection
                     {
                         logger.info(resultSetOfSnippets.getString("title"));
 
+                        String idOfSnippet = resultSetOfSnippets.getString("id");
                         String titleOfSnippet = resultSetOfSnippets.getString("title");
                         String codeSnippet = resultSetOfSnippets.getString("snippet");
 
                         Snippet currentSnippet = new Snippet(titleOfSnippet, codeSnippet);
+                        currentSnippet.setId(Integer.parseInt(idOfSnippet));
                         currentCategory.addSnippet(currentSnippet);
+
+                        logger.info("current id: " + idOfSnippet);
                     }
 
                     listOfCategories.add(currentCategory);
+                    statementForSnippets.close();
                 }
 
                 logger.info("Categories: " + listOfCategories.size());
@@ -77,7 +83,11 @@ public class JdbcSqliteConnection
                 logger.info("Snippet in category 4: " + listOfCategories.get(3).getListOfSnippets().size());
 
                 setCategoriesData(listOfCategories);
+
+                statement.close();
             }
+
+            connection.close();
         }
         catch (ClassNotFoundException e)
         {
@@ -87,6 +97,56 @@ public class JdbcSqliteConnection
         {
             e.printStackTrace();
         }
+    }
+
+    public void insertNewSnippetToDB(Category categoryToDB, Snippet newSnippetToDB) throws Exception
+    {
+        Class.forName("org.sqlite.JDBC");
+        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+
+        Connection connection = DriverManager.getConnection(dbURL);
+
+        if (connection != null)
+        {
+            String categoryTitle = categoryToDB.getTitle();
+            String titleOfNewSnippet = newSnippetToDB.getTitle();
+            String codeOfNewSnippet = newSnippetToDB.getCode();
+
+            String sqlQuery = "INSERT INTO snippets(category, title, snippet) VALUES('" + categoryTitle + "', '" + titleOfNewSnippet + "', '" + codeOfNewSnippet + "')";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+        }
+    }
+
+    public int getLastId() throws Exception
+    {
+        Class.forName("org.sqlite.JDBC");
+        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+        int lastId = -1;
+
+        Connection connection = DriverManager.getConnection(dbURL);
+
+        if (connection != null)
+        {
+            String sqlQuery = "SELECT id FROM snippets ORDER BY id DESC LIMIT 1;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            lastId = -1;
+
+            while (resultSet.next())
+            {
+                lastId = Integer.parseInt(resultSet.getString("id"));
+            }
+
+            preparedStatement.close();
+            connection.close();
+        }
+
+        return lastId;
     }
 
     public void setCategoriesData(List<Category> listOfCategories)

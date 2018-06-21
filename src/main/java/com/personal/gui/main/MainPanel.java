@@ -25,7 +25,6 @@ import com.personal.util.Category;
 import com.personal.util.Snippet;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
-import java.util.Iterator;
 import com.personal.db.JdbcSqliteConnection;
 
 public class MainPanel extends JPanel
@@ -285,6 +284,7 @@ public class MainPanel extends JPanel
                             }
 
                             textEditor.setText(listOfSnippets.getSelectedValue().getCode());
+                            logger.info("id of selected snippet: " + listOfSnippets.getSelectedValue().getId());
                         }
                     }
                     else
@@ -320,6 +320,24 @@ public class MainPanel extends JPanel
                 textEditor.setText("");
                 listOfSnippets.setSelectedIndex(listOfSnippets.getModel().getSize() - 1);
                 titleOfSelectedSnippet.grabFocus();
+                logger.info("id of selected snippet: " + newSnippet.getId());
+
+
+                try
+                {
+                    int idOfNewSnippet = -1;
+                    JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                    idOfNewSnippet = jdbcSqliteConnection.getLastId() + 1;
+                    logger.info("id of inserted snippet: " + idOfNewSnippet);
+                    newSnippet.setId(idOfNewSnippet);
+
+                    jdbcSqliteConnection.insertNewSnippetToDB(selectedCategory, newSnippet);
+                }
+                catch(Exception sqlException)
+                {
+                    sqlException.printStackTrace();
+                }
+
             }
         });
 
