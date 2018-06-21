@@ -322,22 +322,19 @@ public class MainPanel extends JPanel
                 titleOfSelectedSnippet.grabFocus();
                 logger.info("id of selected snippet: " + newSnippet.getId());
 
-
                 try
                 {
-                    int idOfNewSnippet = -1;
                     JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
-                    idOfNewSnippet = jdbcSqliteConnection.getLastId() + 1;
-                    logger.info("id of inserted snippet: " + idOfNewSnippet);
+                    int idOfNewSnippet = jdbcSqliteConnection.getLastId() + 1;
                     newSnippet.setId(idOfNewSnippet);
-
                     jdbcSqliteConnection.insertNewSnippetToDB(selectedCategory, newSnippet);
+
+                    logger.info("id of inserted snippet: " + idOfNewSnippet);
                 }
                 catch(Exception sqlException)
                 {
                     sqlException.printStackTrace();
                 }
-
             }
         });
 
