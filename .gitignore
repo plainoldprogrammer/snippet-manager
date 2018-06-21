@@ -7,5 +7,5 @@ out/
 lib/
 doc/
 target/
-snippets.db
+*.db
 

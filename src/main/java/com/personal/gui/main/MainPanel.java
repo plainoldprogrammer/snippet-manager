@@ -347,6 +347,8 @@ public class MainPanel extends JPanel
             {
                 Category selectedCategory = listOfCategories.getSelectedValue();
                 int indexOfRemovedSnippet = listOfSnippets.getSelectedIndex();
+                int idOfRemovedSnippet = ((Snippet) (selectedCategory.getListOfSnippets().get(indexOfRemovedSnippet))).getId();
+                logger.info("id of removed snippet: " + idOfRemovedSnippet);
                 selectedCategory.getListOfSnippets().remove(indexOfRemovedSnippet);
 
                 DefaultListModel<Snippet> model = new DefaultListModel();
@@ -372,6 +374,16 @@ public class MainPanel extends JPanel
                     {
                         listOfSnippets.setSelectedIndex(indexOfRemovedSnippet - 1);
                     }
+                }
+
+                try
+                {
+                    JdbcSqliteConnection sqliteConnection = new JdbcSqliteConnection();
+                    sqliteConnection.deleteSnippet(idOfRemovedSnippet);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
                 }
             }
         });

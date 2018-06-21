@@ -185,6 +185,24 @@ public class JdbcSqliteConnection
         }
     }
 
+    public void deleteSnippet(int idRemovedSnippet) throws Exception
+    {
+        Class.forName("org.sqlite.JDBC");
+        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+
+        Connection connection = DriverManager.getConnection(dbURL);
+
+        if (connection != null)
+        {
+            String sqlQuery = "DELETE FROM snippets WHERE id=" + idRemovedSnippet;
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+        }
+    }
+
     public void setCategoriesData(List<Category> listOfCategories)
     {
         categoriesData = listOfCategories;
