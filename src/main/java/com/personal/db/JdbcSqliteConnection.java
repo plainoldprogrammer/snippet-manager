@@ -77,10 +77,6 @@ public class JdbcSqliteConnection
                 }
 
                 logger.info("Categories: " + listOfCategories.size());
-                logger.info("Snippet in category 1: " + listOfCategories.get(0).getListOfSnippets().size());
-                logger.info("Snippet in category 2: " + listOfCategories.get(1).getListOfSnippets().size());
-                logger.info("Snippet in category 3: " + listOfCategories.get(2).getListOfSnippets().size());
-                logger.info("Snippet in category 4: " + listOfCategories.get(3).getListOfSnippets().size());
 
                 setCategoriesData(listOfCategories);
 

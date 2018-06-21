@@ -362,7 +362,17 @@ public class MainPanel extends JPanel
 
                 logger.info("model: " + model);
 
-                listOfSnippets.setModel(model);
+                if (!(model.isEmpty()))
+                {
+                    listOfSnippets.setModel(model);
+                }
+                else
+                {
+                    titleOfSelectedSnippet.setText("");
+                    textEditor.setText("");
+                    model.removeAllElements();
+                    listOfSnippets.setModel(model);
+                }
 
                 if ((listOfSnippets.getModel().getSize() > 0) && !(model.isEmpty()))
                 {
@@ -426,8 +436,12 @@ public class MainPanel extends JPanel
                     }
 
                     logger.info("model: " + model);
-                    listOfSnippets.setModel(model);
-                    listOfSnippets.setSelectedIndex(indexSelectedSnippet);
+
+                    if (!(model.isEmpty()))
+                    {
+                        listOfSnippets.setModel(model);
+                        listOfSnippets.setSelectedIndex(indexSelectedSnippet);
+                    }
 
 
                     // update the title in the DB of the selected snippet
