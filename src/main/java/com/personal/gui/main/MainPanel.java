@@ -105,12 +105,15 @@ public class MainPanel extends JPanel
         listOfSnippets = new JList(listSnippetsData.toArray());
         listOfSnippets.setBackground(new Color(236, 236, 236));
 
+        textEditor = new TextEditor();
+
         if (listOfCategories.getSelectedIndex() >= 0)
         {
             if (listOfCategories.getSelectedValue().getListOfSnippets().size() >= 0)
             {
                 listOfSnippets.setSelectedIndex(0);
                 titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                textEditor.setText(listOfSnippets.getSelectedValue().getCode());
                 removeSnippetButton.setEnabled(true);
                 addSnippetButton.setEnabled(true);
             }
@@ -136,7 +139,6 @@ public class MainPanel extends JPanel
         // Panel that contains the title and code of the selected snippet.
 
         setLayout(new BorderLayout());
-        textEditor = new TextEditor();
         JPanel titleAndEditorPanel = new JPanel();
         titleAndEditorPanel.setLayout(new BorderLayout());
         titleAndEditorPanel.add(new JScrollPane(textEditor), BorderLayout.CENTER);
