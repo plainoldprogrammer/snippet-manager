@@ -149,6 +149,25 @@ public class JdbcSqliteConnection
         return lastId;
     }
 
+    public void updateTitleOfSnippet(int snippetId, String snippetTitle) throws Exception
+    {
+        Class.forName("org.sqlite.JDBC");
+        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+
+        Connection connection = DriverManager.getConnection(dbURL);
+
+        if (connection != null)
+        {
+            String sqlQuery = "UPDATE snippets SET title='" + snippetTitle + "' WHERE id=" + snippetId;
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+        }
+
+    }
+
     public void setCategoriesData(List<Category> listOfCategories)
     {
         categoriesData = listOfCategories;

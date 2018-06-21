@@ -21,11 +21,11 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import com.personal.util.Category;
-import com.personal.util.Snippet;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 import com.personal.db.JdbcSqliteConnection;
+import com.personal.util.Category;
+import com.personal.util.Snippet;
 
 public class MainPanel extends JPanel
 {
@@ -398,6 +398,9 @@ public class MainPanel extends JPanel
 
                     Category selectedCategory = listOfCategories.getSelectedValue();
 
+
+                    // refresh the snippet list each time the title is modified
+
                     DefaultListModel<Snippet> model = new DefaultListModel();
                     ListIterator<Snippet> iterator = selectedCategory.getListOfSnippets().listIterator();
 
@@ -411,6 +414,19 @@ public class MainPanel extends JPanel
                     logger.info("model: " + model);
                     listOfSnippets.setModel(model);
                     listOfSnippets.setSelectedIndex(indexSelectedSnippet);
+
+
+                    // update the title in the DB of the selected snippet
+
+                    try
+                    {
+                        JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                        jdbcSqliteConnection.updateTitleOfSnippet(listOfSnippets.getSelectedValue().getId(), listOfSnippets.getSelectedValue().getTitle());
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
                 }
             }
 
