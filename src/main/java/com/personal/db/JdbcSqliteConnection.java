@@ -165,7 +165,24 @@ public class JdbcSqliteConnection
             preparedStatement.close();
             connection.close();
         }
+    }
 
+    public void updateCodeSnippet(int snippetId, String codeSnippet) throws Exception
+    {
+        Class.forName("org.sqlite.JDBC");
+        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+
+        Connection connection = DriverManager.getConnection(dbURL);
+
+        if (connection != null)
+        {
+            String sqlQuery = "UPDATE snippets SET snippet ='" + codeSnippet + "' WHERE id=" + snippetId ;
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+        }
     }
 
     public void setCategoriesData(List<Category> listOfCategories)

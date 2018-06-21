@@ -436,6 +436,40 @@ public class MainPanel extends JPanel
                 insertUpdate(e);
             }
         });
+
+        textEditor.getDocument().addDocumentListener(new DocumentListener()
+        {
+            @Override
+            public void changedUpdate(DocumentEvent e)
+            {
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e)
+            {
+                logger.info("Snippet code change to: " + textEditor.getText());
+
+                Snippet selectedSnippet = listOfSnippets.getSelectedValue();
+                int idOfSelectedSnippet = selectedSnippet.getId();
+                String currentSnippet = textEditor.getText();
+
+                try
+                {
+                    JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                    jdbcSqliteConnection.updateCodeSnippet(idOfSelectedSnippet, currentSnippet);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e)
+            {
+                insertUpdate(e);
+            }
+        });
     }
 
     public JTextArea getTextEditor()
