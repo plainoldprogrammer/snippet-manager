@@ -25,6 +25,8 @@ import com.personal.util.Category;
 import com.personal.util.Snippet;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
+import java.util.Iterator;
+import com.personal.db.JdbcSqliteConnection;
 
 public class MainPanel extends JPanel
 {
@@ -54,16 +56,15 @@ public class MainPanel extends JPanel
         categoriesOptionsPanel.add(addCategoryButton, BorderLayout.NORTH);
         categoriesOptionsPanel.add(removeCategoryButton, BorderLayout.SOUTH);
 
+
+        // Prepare data from DB.
+        JdbcSqliteConnection dbConnection = new JdbcSqliteConnection();
+        listCategoriesData = dbConnection.getCategoriesData();
+        logger.info("listCategories on DB: " + listCategoriesData);
+
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
         panelCategories.setBackground(new Color(216, 216, 216));
-        listCategoriesData = new ArrayList<>();
-        Category category1 = new Category("C");
-        Category category2 = new Category("Java");
-        Category category3 = new Category("html");
-        listCategoriesData.add(category1);
-        listCategoriesData.add(category2);
-        listCategoriesData.add(category3);
         listOfCategories = new JList(listCategoriesData.toArray());
         listOfCategories.setBackground(new Color(216, 216, 216));
         listOfCategories.setSelectedIndex(0);
@@ -89,28 +90,19 @@ public class MainPanel extends JPanel
 
         JPanel panelSnippets = new JPanel();
         panelSnippets.setLayout(new BorderLayout());
-        Snippet snippet1 = new Snippet("Hello world", "#include <std.io>");
-        Snippet snippet2 = new Snippet("Get time", "system(time)");
-        Snippet snippet3 = new Snippet("How to define a macro", "private const MY_VALUE");
-        Snippet snippet4 = new Snippet("Hello world java", "public static void main(args[])");
-        Snippet snippet5 = new Snippet("Get current time", "getCurrentMillisTime()");
-        Snippet snippet6 = new Snippet("Set utf", "setUTFCharset('utf')");
-        Snippet snippet7 = new Snippet("Create a sub-div", "<div><div></div></div>");
-        Snippet snippet8 = new Snippet("Generate a form", "<form><form>");
-        Snippet snippet9 = new Snippet("Implement text input", "<input name=''>/");
-        category1.addSnippet(snippet1);
-        category1.addSnippet(snippet2);
-        category1.addSnippet(snippet3);
-        category2.addSnippet(snippet4);
-        category2.addSnippet(snippet5);
-        category3.addSnippet(snippet6);
-        category3.addSnippet(snippet7);
-        category3.addSnippet(snippet8);
-        category3.addSnippet(snippet9);
         listSnippetsData = new ArrayList<>();
-        listSnippetsData.add(snippet1);
-        listSnippetsData.add(snippet2);
-        listSnippetsData.add(snippet3);
+
+        Category firstCategory = listCategoriesData.get(0);
+        List<Snippet> snippetsInFirstCategory = firstCategory.getListOfSnippets();
+
+        ListIterator<Snippet> iterator = snippetsInFirstCategory.listIterator();
+
+        while (iterator.hasNext())
+        {
+            Snippet currentSnippet = iterator.next();
+            listSnippetsData.add(currentSnippet);
+        }
+
         listOfSnippets = new JList(listSnippetsData.toArray());
         listOfSnippets.setBackground(new Color(236, 236, 236));
 

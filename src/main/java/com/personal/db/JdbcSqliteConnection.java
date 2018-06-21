@@ -15,8 +15,14 @@ import com.personal.util.Category;
 public class JdbcSqliteConnection
 {
     final static Logger logger = LogManager.getLogger(JdbcSqliteConnection.class);
+    private List<Category> categoriesData;
 
-    public static void main(String args[])
+    public JdbcSqliteConnection()
+    {
+        getSnippets();
+    }
+
+    private void getSnippets()
     {
         try
         {
@@ -70,6 +76,7 @@ public class JdbcSqliteConnection
                 logger.info("Snippet in category 3: " + listOfCategories.get(2).getListOfSnippets().size());
                 logger.info("Snippet in category 4: " + listOfCategories.get(3).getListOfSnippets().size());
 
+                setCategoriesData(listOfCategories);
             }
         }
         catch (ClassNotFoundException e)
@@ -80,5 +87,15 @@ public class JdbcSqliteConnection
         {
             e.printStackTrace();
         }
+    }
+
+    public void setCategoriesData(List<Category> listOfCategories)
+    {
+        categoriesData = listOfCategories;
+    }
+
+    public List<Category> getCategoriesData()
+    {
+        return categoriesData;
     }
 }
