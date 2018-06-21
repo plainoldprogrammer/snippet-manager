@@ -29,11 +29,12 @@ public class MenuBar extends JMenuBar
         JMenu menuEdit = new JMenu("Edit");
         JMenu menuHelp = new JMenu("Help");
 
+        menuFile.add(new MenuItemAbout());
+
         menuFile.add(new MenuItemOpen());
         menuFile.add(new MenuItemSave());
         menuFile.add(new MenuItemSaveAs());
 
-        menuFile.add(new MenuItemAbout());
         menuFile.add(new MenuItemPreferences());
         menuFile.add(new MenuItemQuit());
 
