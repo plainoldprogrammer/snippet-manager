@@ -21,6 +21,7 @@ public class Program implements Runnable
         {
             e.printStackTrace();
         }
+
         MainWindow mainWindow = new MainWindow();
         mainWindow.setVisible(true);
     }

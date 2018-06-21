@@ -91,36 +91,43 @@ public class MainPanel extends JPanel
         panelSnippets.setLayout(new BorderLayout());
         listSnippetsData = new ArrayList<>();
 
-        Category firstCategory = listCategoriesData.get(0);
-        List<Snippet> snippetsInFirstCategory = firstCategory.getListOfSnippets();
-
-        ListIterator<Snippet> iterator = snippetsInFirstCategory.listIterator();
-
-        while (iterator.hasNext())
-        {
-            Snippet currentSnippet = iterator.next();
-            listSnippetsData.add(currentSnippet);
-        }
-
-        listOfSnippets = new JList(listSnippetsData.toArray());
-        listOfSnippets.setBackground(new Color(236, 236, 236));
-
         textEditor = new TextEditor();
 
-        if (listOfCategories.getSelectedIndex() >= 0)
+        if (listCategoriesData.size() > 0)
         {
-            if (listOfCategories.getSelectedValue().getListOfSnippets().size() >= 0)
+            Category firstCategory = listCategoriesData.get(0);
+            List<Snippet> snippetsInFirstCategory = firstCategory.getListOfSnippets();
+
+            ListIterator<Snippet> iterator = snippetsInFirstCategory.listIterator();
+
+            while (iterator.hasNext())
             {
-                listOfSnippets.setSelectedIndex(0);
-                titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
-                textEditor.setText(listOfSnippets.getSelectedValue().getCode());
-                removeSnippetButton.setEnabled(true);
-                addSnippetButton.setEnabled(true);
+                Snippet currentSnippet = iterator.next();
+                listSnippetsData.add(currentSnippet);
+            }
+
+            listOfSnippets = new JList(listSnippetsData.toArray());
+            listOfSnippets.setBackground(new Color(236, 236, 236));
+
+            if (listOfCategories.getSelectedIndex() >= 0)
+            {
+                if (listOfCategories.getSelectedValue().getListOfSnippets().size() >= 0)
+                {
+                    listOfSnippets.setSelectedIndex(0);
+                    titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                    textEditor.setText(listOfSnippets.getSelectedValue().getCode());
+                    removeSnippetButton.setEnabled(true);
+                    addSnippetButton.setEnabled(true);
+                }
+            }
+            else
+            {
+                removeSnippetButton.setEnabled(false);
             }
         }
         else
         {
-            removeSnippetButton.setEnabled(false);
+            listOfSnippets = new JList();
         }
 
         panelSnippets.add(snippetFilter, BorderLayout.NORTH);
