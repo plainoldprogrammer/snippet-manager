@@ -195,8 +195,8 @@ public class MainPanel extends JPanel
                         createNewCategoryWindow.setVisible(false);
                         removeCategoryButton.setEnabled(true);
 
-                        // the new category isn't selected in the gui and theres no one selected
-                        addSnippetButton.setEnabled(false);
+                        // the new category is selected in the gui and theres no one selected
+                        addSnippetButton.setEnabled(true);
                     }
                 });
 
