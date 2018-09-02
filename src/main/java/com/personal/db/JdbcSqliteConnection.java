@@ -127,7 +127,8 @@ public class JdbcSqliteConnection
 
         if (connection != null)
         {
-            String sqlQuery = "SELECT id FROM snippets ORDER BY id DESC LIMIT 1;";
+            String sqlQuery = "SELECT SEQ FROM SQLITE_SEQUENCE WHERE NAME='snippets'";
+            logger.info("check the current id: " + sqlQuery);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -135,7 +136,7 @@ public class JdbcSqliteConnection
 
             while (resultSet.next())
             {
-                lastId = Integer.parseInt(resultSet.getString("id"));
+                lastId = Integer.parseInt(resultSet.getString("seq"));
             }
 
             preparedStatement.close();
@@ -155,6 +156,7 @@ public class JdbcSqliteConnection
         if (connection != null)
         {
             String sqlQuery = "UPDATE snippets SET title='" + snippetTitle + "' WHERE id=" + snippetId;
+            logger.info("query to execute: " + sqlQuery);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
 
@@ -191,6 +193,7 @@ public class JdbcSqliteConnection
         if (connection != null)
         {
             String sqlQuery = "DELETE FROM snippets WHERE id=" + idRemovedSnippet;
+            logger.info("query to execute: " + sqlQuery);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
 

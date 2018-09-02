@@ -160,6 +160,7 @@ public class MainPanel extends JPanel
 
         addCategoryButton.addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 JFrame createNewCategoryWindow = new JFrame();
@@ -328,6 +329,7 @@ public class MainPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                logger.info("adding a new snippet");
                 Category selectedCategory = listOfCategories.getSelectedValue();
                 Snippet newSnippet = new Snippet("New Snippet", "");
                 selectedCategory.addSnippet(newSnippet);
@@ -351,6 +353,7 @@ public class MainPanel extends JPanel
                 {
                     JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
                     int idOfNewSnippet = jdbcSqliteConnection.getLastId() + 1;
+                    logger.info("idOfNewSnippet: " + idOfNewSnippet);
                     newSnippet.setId(idOfNewSnippet);
                     jdbcSqliteConnection.insertNewSnippetToDB(selectedCategory, newSnippet);
 
@@ -472,6 +475,7 @@ public class MainPanel extends JPanel
                     try
                     {
                         JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                        logger.info("id of the snippet to update their title: " + listOfSnippets.getSelectedValue().getId());
                         jdbcSqliteConnection.updateTitleOfSnippet(listOfSnippets.getSelectedValue().getId(), listOfSnippets.getSelectedValue().getTitle());
                     }
                     catch (Exception ex)
