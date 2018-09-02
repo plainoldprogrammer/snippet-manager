@@ -14,6 +14,7 @@ public class MenuItemQuit extends JMenuItem
 
         addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 System.exit(0);

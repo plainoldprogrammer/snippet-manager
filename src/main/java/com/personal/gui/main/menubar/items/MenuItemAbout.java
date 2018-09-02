@@ -15,6 +15,7 @@ public class MenuItemAbout extends JMenuItem
 
         addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 JOptionPane.showMessageDialog(null, "Snippet Manager 0.3 (Beta)");
