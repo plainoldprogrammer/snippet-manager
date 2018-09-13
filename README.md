@@ -12,6 +12,7 @@ The *snippet-manager* is a java swing application which let to store specific co
 **Version 0.4 (Beta)**
 * This version is fully usable.
 * The dimensions of the inner panels are suitables.
+* Enter key is available when creating a new category.
 
 **Version 0.3 (Beta)**
 * This version is parcially usable.
