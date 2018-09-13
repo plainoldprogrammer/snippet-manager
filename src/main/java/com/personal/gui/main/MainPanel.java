@@ -174,9 +174,36 @@ public class MainPanel extends JPanel
                 JTextField newCategoryNameTextField = new JTextField();
                 createNewCategoryWindow.add(newCategoryNameTextField, BorderLayout.CENTER);
 
-                JButton confirmNewCategorieButton = new JButton("Accept");
 
-                confirmNewCategorieButton.addActionListener(new ActionListener(){
+                // Create a jbutton mockup in order to expose the "fireActionPerformed" method to use when hit <Enter>.
+
+                class ConfirmNewCategoryButton extends JButton
+                {
+                    public ConfirmNewCategoryButton(String buttonTitle)
+                    {
+                        super(buttonTitle);
+                    }
+
+                    @Override
+                    public void fireActionPerformed(ActionEvent e)
+                    {
+                        super.fireActionPerformed(e);
+                    }
+                }
+
+                ConfirmNewCategoryButton confirmNewCategoryButton = new ConfirmNewCategoryButton("Accept");
+
+                newCategoryNameTextField.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        logger.info("Enter is pressed!");
+                        confirmNewCategoryButton.fireActionPerformed(e);
+                    }
+                });
+
+
+                confirmNewCategoryButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
@@ -206,7 +233,7 @@ public class MainPanel extends JPanel
                     }
                 });
 
-                createNewCategoryWindow.add(confirmNewCategorieButton, BorderLayout.SOUTH);
+                createNewCategoryWindow.add(confirmNewCategoryButton, BorderLayout.SOUTH);
                 createNewCategoryWindow.pack();
                 createNewCategoryWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 createNewCategoryWindow.setLocationRelativeTo(null);
