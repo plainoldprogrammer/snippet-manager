@@ -12,7 +12,7 @@ public class MainWindow extends JFrame
         super();
 
         setSize(600, 400);
-        setTitle("Snippet Manager 0.3 (Beta)");
+        setTitle("Snippet Manager 0.4 (Beta)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

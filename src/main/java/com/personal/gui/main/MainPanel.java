@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
+import java.awt.Dimension;
 import com.personal.db.JdbcSqliteConnection;
 import com.personal.util.Category;
 import com.personal.util.Snippet;
@@ -138,6 +139,8 @@ public class MainPanel extends JPanel
 
         // Panel that contains categories and snippets panel.
 
+        panelCategories.setPreferredSize(new Dimension(150, panelCategories.getHeight()));
+        panelSnippets.setPreferredSize(new Dimension(150, panelCategories.getHeight()));
         JPanel categoriesAndSnippetsPanel = new JPanel();
         categoriesAndSnippetsPanel.setLayout(new BorderLayout());
         categoriesAndSnippetsPanel.add(panelCategories, BorderLayout.WEST);
@@ -154,6 +157,7 @@ public class MainPanel extends JPanel
 
         // Adding the two main panels to the main window.
 
+        categoriesAndSnippetsPanel.setPreferredSize(new Dimension(300, categoriesAndSnippetsPanel.getHeight()));
         setLayout(new BorderLayout());
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
         add(titleAndEditorPanel, BorderLayout.CENTER);
