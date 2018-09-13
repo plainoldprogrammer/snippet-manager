@@ -57,6 +57,7 @@ public class MainPanel extends JPanel
 
 
         // Prepare data from DB.
+
         JdbcSqliteConnection dbConnection = new JdbcSqliteConnection();
         listCategoriesData = dbConnection.getCategoriesData();
         logger.info("listCategories on DB: " + listCategoriesData);
@@ -145,7 +146,6 @@ public class MainPanel extends JPanel
 
         // Panel that contains the title and code of the selected snippet.
 
-        setLayout(new BorderLayout());
         JPanel titleAndEditorPanel = new JPanel();
         titleAndEditorPanel.setLayout(new BorderLayout());
         titleAndEditorPanel.add(new JScrollPane(textEditor), BorderLayout.CENTER);
@@ -154,6 +154,7 @@ public class MainPanel extends JPanel
 
         // Adding the two main panels to the main window.
 
+        setLayout(new BorderLayout());
         add(categoriesAndSnippetsPanel, BorderLayout.WEST);
         add(titleAndEditorPanel, BorderLayout.CENTER);
 
