@@ -1,12 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea
-*.ipr
-*.iws
-snippet-manager.iml
 out/
 lib/
 doc/
 target/
-*.db
-src/main/resources/snippets.db
 
