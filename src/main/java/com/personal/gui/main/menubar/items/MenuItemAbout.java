@@ -18,7 +18,7 @@ public class MenuItemAbout extends JMenuItem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                JOptionPane.showMessageDialog(null, "Snippet Manager 0.3 (Beta)");
+                JOptionPane.showMessageDialog(null, "Snippet Manager 0.4 (Beta)");
             }
         });
     }
