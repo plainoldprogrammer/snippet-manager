@@ -1,6 +1,6 @@
 # Snippet Manager
 
-*snippet-manager* is a java swing application which let to store specific code snippets under categories.
+*snippet-manager* is a java swing application that allows you to store specific code snippets under categories.
 
 ---
 
