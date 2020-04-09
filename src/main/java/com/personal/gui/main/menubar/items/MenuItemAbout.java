@@ -18,7 +18,12 @@ public class MenuItemAbout extends JMenuItem
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                JOptionPane.showMessageDialog(null, "Snippet Manager v0.5 (Beta)");
+                String about =  "Snippet Manager\n" +
+                                "Version: 0.5 (Beta)\n" +
+                                "Release Date: 2020 April\n" +
+                                "Developer: PlainOldProgrammer\n";
+
+                JOptionPane.showMessageDialog(null, about, "About Snippet Manager", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
