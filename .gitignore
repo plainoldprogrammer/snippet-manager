@@ -3,6 +3,6 @@ out/
 lib/
 doc/
 target/
-.idea/workspace.xml
 src/main/resources/snippets.db
+.idea/*
 
