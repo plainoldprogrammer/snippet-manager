@@ -3,6 +3,7 @@
 **Snippet Manager** is a *Java (Swing)* application that allows you to store specific code snippets under categories.
 
 <img src="https://github.com/plainoldprogrammer/snippet-manager/blob/master/screenshots/screenshot-main-window.jpg?raw=true" width="910" height="517">
+
 ---
 
 ### Capabilities
