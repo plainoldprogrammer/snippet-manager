@@ -81,9 +81,8 @@ public class JdbcSqliteConnection
                 setCategoriesData(listOfCategories);
 
                 statement.close();
+                connection.close();
             }
-
-            connection.close();
         }
         catch (ClassNotFoundException e)
         {
