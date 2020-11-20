@@ -46,7 +46,6 @@ public class JdbcSqliteConnection
 
                     while (resultSet.next())
                     {
-
                         String categoryName = resultSet.getString("category");
                         logger.info(categoryName);
                         Category currentCategory = new Category(categoryName);
@@ -108,7 +107,7 @@ public class JdbcSqliteConnection
 
         if (connection != null)
         {
-            String categoryTitle = categoryToDB.getTitle();
+            String categoryTitle = categoryToDB.getName();
             String titleOfNewSnippet = newSnippetToDB.getTitle();
             String codeOfNewSnippet = newSnippetToDB.getCode();
 

@@ -5,29 +5,29 @@ import java.util.ArrayList;
 
 public class Category
 {
-    private String title;
+    private String name;
     private List<Snippet> listOfSnippets;
 
     public Category()
     {
-        title = "";
+        name = "";
         listOfSnippets = new ArrayList<>();
     }
 
-    public Category(String title)
+    public Category(String name)
     {
-        this.title = title;
+        this.name = name;
         listOfSnippets = new ArrayList<>();
     }
 
-    public void setTitle(String title)
+    public void setName(String name)
     {
-        this.title = title;
+        this.name = name;
     }
 
-    public String getTitle()
+    public String getName()
     {
-        return title;
+        return name;
     }
 
     public void setListOfSnippets(List<Snippet> newListOfSnippets)
@@ -43,7 +43,7 @@ public class Category
     @Override
     public String toString()
     {
-        return title;
+        return name;
     }
 
     public void addSnippet(Snippet snippet)
