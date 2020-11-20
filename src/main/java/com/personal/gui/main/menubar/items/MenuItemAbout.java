@@ -19,8 +19,8 @@ public class MenuItemAbout extends JMenuItem
             public void actionPerformed(ActionEvent e)
             {
                 String about =  "Snippet Manager\n" +
-                                "Version: 0.5 (Beta)\n" +
-                                "Release Date: 2020 April\n" +
+                                "Version: 0.6 (Beta)\n" +
+                                "Release Date: 2020 November\n" +
                                 "Developer: PlainOldProgrammer\n";
 
                 JOptionPane.showMessageDialog(null, about, "About Snippet Manager", JOptionPane.INFORMATION_MESSAGE);
