@@ -34,54 +34,67 @@ public class JdbcSqliteConnection
 
             if (connection != null)
             {
-                logger.info("Connected ok!");
-                logger.info(connection);
                 Statement statement = connection.createStatement();
-                logger.info(statement);
+                String queryTableSnippets = "CREATE TABLE IF NOT EXISTS snippets (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, snippet TEXT, category TEXT)";
 
-                String sqlQuery = "SELECT DISTINCT category FROM snippets";
-                ResultSet resultSet = statement.executeQuery(sqlQuery);
-
-                List<Category> listOfCategories = new ArrayList();
-
-                while (resultSet.next())
+                try
                 {
-
-                    String categoryName = resultSet.getString("category");
-                    logger.info(categoryName);
-                    Category currentCategory = new Category(categoryName);
-
-                    String sqlQueryForSnippetsOfACategory = "SELECT id, title, snippet FROM snippets WHERE category = '" + categoryName + "'";
-                    logger.info(sqlQueryForSnippetsOfACategory);
-
-                    Statement statementForSnippets = connection.createStatement();
-                    ResultSet resultSetOfSnippets = statementForSnippets.executeQuery(sqlQueryForSnippetsOfACategory);
-
-                    while (resultSetOfSnippets.next())
-                    {
-                        logger.info(resultSetOfSnippets.getString("title"));
-
-                        String idOfSnippet = resultSetOfSnippets.getString("id");
-                        String titleOfSnippet = resultSetOfSnippets.getString("title");
-                        String codeSnippet = resultSetOfSnippets.getString("snippet");
-
-                        Snippet currentSnippet = new Snippet(titleOfSnippet, codeSnippet);
-                        currentSnippet.setId(Integer.parseInt(idOfSnippet));
-                        currentCategory.addSnippet(currentSnippet);
-
-                        logger.info("current id: " + idOfSnippet);
-                    }
-
-                    listOfCategories.add(currentCategory);
-                    statementForSnippets.close();
+                    statement.executeQuery(queryTableSnippets);
+                }
+                catch (Exception e)
+                {
+                    logger.info("Exception when creating the snippets table");
                 }
 
-                logger.info("Categories: " + listOfCategories.size());
+                String sqlQuery = "SELECT DISTINCT category FROM snippets";
+                try
+                {
+                    ResultSet resultSet = statement.executeQuery(sqlQuery);
+                    List<Category> listOfCategories = new ArrayList();
 
-                setCategoriesData(listOfCategories);
+                    while (resultSet.next())
+                    {
 
-                statement.close();
-                connection.close();
+                        String categoryName = resultSet.getString("category");
+                        logger.info(categoryName);
+                        Category currentCategory = new Category(categoryName);
+
+                        String sqlQueryForSnippetsOfACategory = "SELECT id, title, snippet FROM snippets WHERE category = '" + categoryName + "'";
+                        logger.info(sqlQueryForSnippetsOfACategory);
+
+                        Statement statementForSnippets = connection.createStatement();
+                        ResultSet resultSetOfSnippets = statementForSnippets.executeQuery(sqlQueryForSnippetsOfACategory);
+
+                        while (resultSetOfSnippets.next())
+                        {
+                            logger.info(resultSetOfSnippets.getString("title"));
+
+                            String idOfSnippet = resultSetOfSnippets.getString("id");
+                            String titleOfSnippet = resultSetOfSnippets.getString("title");
+                            String codeSnippet = resultSetOfSnippets.getString("snippet");
+
+                            Snippet currentSnippet = new Snippet(titleOfSnippet, codeSnippet);
+                            currentSnippet.setId(Integer.parseInt(idOfSnippet));
+                            currentCategory.addSnippet(currentSnippet);
+
+                            logger.info("current id: " + idOfSnippet);
+                        }
+
+                        listOfCategories.add(currentCategory);
+                        statementForSnippets.close();
+                    }
+
+                    logger.info("Categories: " + listOfCategories.size());
+
+                    setCategoriesData(listOfCategories);
+
+                    statement.close();
+                    connection.close();
+                }
+                catch (Exception e)
+                {
+                    System.out.println("is NULL");
+                }
             }
         }
         catch (ClassNotFoundException e)
