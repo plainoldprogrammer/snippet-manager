@@ -36,15 +36,7 @@ public class JdbcSqliteConnection
             {
                 Statement statement = connection.createStatement();
                 String queryTableSnippets = "CREATE TABLE IF NOT EXISTS snippets (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, snippet TEXT, category TEXT)";
-
-                try
-                {
-                    statement.executeQuery(queryTableSnippets);
-                }
-                catch (Exception e)
-                {
-                    logger.info("Exception when creating the snippets table");
-                }
+                statement.executeUpdate(queryTableSnippets);
 
                 String sqlQuery = "SELECT DISTINCT category FROM snippets";
                 try
