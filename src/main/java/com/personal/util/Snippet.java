@@ -6,16 +6,16 @@ public class Snippet
     private String title;
     private String code;
 
-    public Snippet(String newTitle, String newCode)
+    public Snippet(String title, String code)
     {
         id = -1;
-        title = newTitle;
-        code = newCode;
+        this.title = title;
+        this.code = code;
     }
 
-    public void setId(int newId)
+    public void setId(int id)
     {
-        id = newId;
+        this.id = id;
     }
 
     public int getId()
@@ -23,9 +23,9 @@ public class Snippet
         return id;
     }
 
-    public void setTitle(String newTitle)
+    public void setTitle(String title)
     {
-        title = newTitle;
+        this.title = title;
     }
 
     public String getTitle()
@@ -33,9 +33,9 @@ public class Snippet
         return title;
     }
 
-    public void setCode(String newCode)
+    public void setCode(String code)
     {
-        code = newCode;
+        this.code = code;
     }
 
     public String getCode()
@@ -49,4 +49,3 @@ public class Snippet
         return title;
     }
 }
-

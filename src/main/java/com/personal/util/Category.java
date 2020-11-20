@@ -14,15 +14,15 @@ public class Category
         listOfSnippets = new ArrayList<>();
     }
 
-    public Category(String newTitle)
+    public Category(String title)
     {
-        title = newTitle;
+        this.title = title;
         listOfSnippets = new ArrayList<>();
     }
 
-    public void setTitle(String newTitle)
+    public void setTitle(String title)
     {
-        title = newTitle;
+        this.title = title;
     }
 
     public String getTitle()
@@ -46,9 +46,8 @@ public class Category
         return title;
     }
 
-    public void addSnippet(Snippet newSnippet)
+    public void addSnippet(Snippet snippet)
     {
-        listOfSnippets.add(newSnippet);
+        listOfSnippets.add(snippet);
     }
 }
-
