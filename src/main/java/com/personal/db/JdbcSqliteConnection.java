@@ -98,7 +98,7 @@ public class JdbcSqliteConnection
         }
     }
 
-    public void insertNewSnippetToDB(Category categoryToDB, Snippet newSnippetToDB) throws Exception
+    public void insertNewSnippetToDB(Category categoryToDB, Snippet snippet) throws Exception
     {
         Class.forName("org.sqlite.JDBC");
         String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
@@ -108,8 +108,8 @@ public class JdbcSqliteConnection
         if (connection != null)
         {
             String categoryTitle = categoryToDB.getName();
-            String titleOfNewSnippet = newSnippetToDB.getTitle();
-            String codeOfNewSnippet = newSnippetToDB.getCode();
+            String titleOfNewSnippet = snippet.getTitle();
+            String codeOfNewSnippet = snippet.getCode();
 
             String sqlQuery = "INSERT INTO snippets(category, title, snippet) VALUES('" + categoryTitle + "', '" + titleOfNewSnippet + "', '" + codeOfNewSnippet + "')";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -124,7 +124,7 @@ public class JdbcSqliteConnection
     {
         Class.forName("org.sqlite.JDBC");
         String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
-        int lastId = -1;
+        int id = -1;
 
         Connection connection = DriverManager.getConnection(dbURL);
 
@@ -135,21 +135,21 @@ public class JdbcSqliteConnection
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            lastId = -1;
+            id = -1;
 
             while (resultSet.next())
             {
-                lastId = Integer.parseInt(resultSet.getString("seq"));
+                id = Integer.parseInt(resultSet.getString("seq"));
             }
 
             preparedStatement.close();
             connection.close();
         }
 
-        return lastId;
+        return id;
     }
 
-    public void updateTitleOfSnippet(int snippetId, String snippetTitle) throws Exception
+    public void updateTitleOfSnippet(int id, String snippetTitle) throws Exception
     {
         Class.forName("org.sqlite.JDBC");
         String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
@@ -158,7 +158,7 @@ public class JdbcSqliteConnection
 
         if (connection != null)
         {
-            String sqlQuery = "UPDATE snippets SET title='" + snippetTitle + "' WHERE id=" + snippetId;
+            String sqlQuery = "UPDATE snippets SET title='" + snippetTitle + "' WHERE id=" + id;
             logger.info("query to execute: " + sqlQuery);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
@@ -168,7 +168,7 @@ public class JdbcSqliteConnection
         }
     }
 
-    public void updateCodeSnippet(int snippetId, String codeSnippet) throws Exception
+    public void updateCodeSnippet(int id, String codeSnippet) throws Exception
     {
         Class.forName("org.sqlite.JDBC");
         String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
@@ -177,7 +177,7 @@ public class JdbcSqliteConnection
 
         if (connection != null)
         {
-            String sqlQuery = "UPDATE snippets SET snippet ='" + codeSnippet + "' WHERE id=" + snippetId ;
+            String sqlQuery = "UPDATE snippets SET snippet ='" + codeSnippet + "' WHERE id=" + id ;
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
 
@@ -186,7 +186,7 @@ public class JdbcSqliteConnection
         }
     }
 
-    public void deleteSnippet(int idRemovedSnippet) throws Exception
+    public void deleteSnippet(int id) throws Exception
     {
         Class.forName("org.sqlite.JDBC");
         String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
@@ -195,7 +195,7 @@ public class JdbcSqliteConnection
 
         if (connection != null)
         {
-            String sqlQuery = "DELETE FROM snippets WHERE id=" + idRemovedSnippet;
+            String sqlQuery = "DELETE FROM snippets WHERE id=" + id;
             logger.info("query to execute: " + sqlQuery);
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
