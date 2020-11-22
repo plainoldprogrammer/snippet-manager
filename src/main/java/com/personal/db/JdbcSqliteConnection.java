@@ -17,6 +17,7 @@ public class JdbcSqliteConnection
 {
     final static Logger logger = LogManager.getLogger(JdbcSqliteConnection.class);
     private List<Category> categoriesData;
+    private Connection connection;
 
     public JdbcSqliteConnection()
     {
@@ -30,7 +31,7 @@ public class JdbcSqliteConnection
             Class.forName("org.sqlite.JDBC");
             String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
 
-            Connection connection = DriverManager.getConnection(dbURL);
+            connection = DriverManager.getConnection(dbURL);
 
             if (connection != null)
             {
