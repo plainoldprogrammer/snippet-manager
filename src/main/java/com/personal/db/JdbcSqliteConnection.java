@@ -81,7 +81,6 @@ public class JdbcSqliteConnection
                     setCategoriesData(listOfCategories);
 
                     statement.close();
-                    connection.close();
                 }
                 catch (Exception e)
                 {
@@ -96,6 +95,17 @@ public class JdbcSqliteConnection
         catch (SQLException e)
         {
             e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                connection.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
