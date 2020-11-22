@@ -24,14 +24,40 @@ public class JdbcSqliteConnection
         getSnippets();
     }
 
-    private void getSnippets()
+    private void openDbConnection()
     {
         try
         {
             Class.forName("org.sqlite.JDBC");
             String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
-
             connection = DriverManager.getConnection(dbURL);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeDbConnection()
+    {
+        try
+        {
+            if (connection != null)
+            {
+                connection.close();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void getSnippets()
+    {
+        try
+        {
+            openDbConnection();
 
             if (connection != null)
             {
@@ -88,24 +114,13 @@ public class JdbcSqliteConnection
                 }
             }
         }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
         finally
         {
-            try
-            {
-                connection.close();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            closeDbConnection();
         }
     }
 
