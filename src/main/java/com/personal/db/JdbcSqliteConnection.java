@@ -21,21 +21,22 @@ public class JdbcSqliteConnection
 
     public JdbcSqliteConnection()
     {
-        getSnippets();
-    }
-
-    private void openDbConnection()
-    {
         try
         {
-            Class.forName("org.sqlite.JDBC");
-            String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
-            connection = DriverManager.getConnection(dbURL);
+            connection = openDbConnection();
+            getSnippets();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
+    }
+
+    private Connection openDbConnection() throws Exception
+    {
+        Class.forName("org.sqlite.JDBC");
+        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+        return DriverManager.getConnection(dbURL);
     }
 
     private void closeDbConnection()
@@ -57,8 +58,6 @@ public class JdbcSqliteConnection
     {
         try
         {
-            openDbConnection();
-
             if (connection != null)
             {
                 Statement statement = connection.createStatement();
