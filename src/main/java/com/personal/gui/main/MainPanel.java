@@ -45,7 +45,7 @@ public class MainPanel extends JPanel
 
         // Panel of the categories.
 
-        JLabel categoriesLabel = new JLabel("All Categories");
+        JLabel categoriesLabel = new JLabel("Category");
         categoriesLabel.setFont(new Font("monospaced", Font.BOLD, 12));
 
         JPanel categoriesOptionsPanel = new JPanel();
@@ -76,8 +76,10 @@ public class MainPanel extends JPanel
 
         // Panel of the snippets.
 
-        JTextField snippetFilter = new JTextField("Filter");
-        titleOfSelectedSnippet = new JTextField("Title Of Selected Snippet");
+        JTextField snippetFilter = new JTextField("Snippet");
+        snippetFilter.setBackground(new Color(216, 216, 216));
+        titleOfSelectedSnippet = new JTextField("Selected Snippet");
+        titleOfSelectedSnippet.setBackground(new Color(216, 216, 216));
 
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());
