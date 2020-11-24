@@ -79,7 +79,6 @@ public class MainPanel extends JPanel
         JTextField snippetFilter = new JTextField("Snippet");
         snippetFilter.setBackground(new Color(216, 216, 216));
         titleOfSelectedSnippet = new JTextField("Selected Snippet");
-        titleOfSelectedSnippet.setBackground(new Color(216, 216, 216));
 
         JPanel snippetsOptionPanel = new JPanel();
         snippetsOptionPanel.setLayout(new BorderLayout());

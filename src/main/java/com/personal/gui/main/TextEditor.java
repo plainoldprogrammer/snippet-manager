@@ -13,4 +13,3 @@ public class TextEditor extends JTextArea
         setTabSize(4);
     }
 }
-
