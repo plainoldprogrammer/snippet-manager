@@ -239,4 +239,24 @@ public class JdbcSqliteConnection
     {
         return categoriesData;
     }
+
+    public void createCategory(String category)
+    {
+        try
+        {
+            connection = openDbConnection();
+            String sqlQuery = "INSERT INTO categories(name) VALUES('" + category + "')";
+            logger.info(sqlQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            closeDbConnection();
+        }
+    }
 }

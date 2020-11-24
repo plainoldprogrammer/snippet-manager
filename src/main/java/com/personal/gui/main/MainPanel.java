@@ -231,6 +231,8 @@ public class MainPanel extends JPanel
 
                         // the new category is selected in the gui and theres no one selected
                         addSnippetButton.setEnabled(true);
+
+                        dbConnection.createCategory(newCategoryNameTextField.getText());
                     }
                 });
 
