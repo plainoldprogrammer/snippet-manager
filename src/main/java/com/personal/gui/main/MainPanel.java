@@ -233,6 +233,7 @@ public class MainPanel extends JPanel
                         addSnippetButton.setEnabled(true);
 
                         dbConnection.createCategory(newCategoryNameTextField.getText());
+                        dbConnection.getCategories();
                     }
                 });
 

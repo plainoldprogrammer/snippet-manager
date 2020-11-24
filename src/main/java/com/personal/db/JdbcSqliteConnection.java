@@ -263,4 +263,34 @@ public class JdbcSqliteConnection
             closeDbConnection();
         }
     }
+
+    public void getCategories()
+    {
+        try
+        {
+            connection = openDbConnection();
+
+            String sqlQuery = "SELECT * FROM categories";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+            while (resultSet.next())
+            {
+                String id = resultSet.getString("id");
+                String categoryName = resultSet.getString("name");
+                logger.info (id +  " - " + categoryName);
+            }
+
+            statement.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            closeDbConnection();
+        }
+    }
 }
