@@ -264,22 +264,23 @@ public class JdbcSqliteConnection
         }
     }
 
-    public void getCategories()
+    public List<Category> getCategories()
     {
+        List<Category> categories = new ArrayList<Category>();
+
         try
         {
             connection = openDbConnection();
-
             String sqlQuery = "SELECT * FROM categories";
-
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
             while (resultSet.next())
             {
-                String id = resultSet.getString("id");
+                int id = resultSet.getInt("id");
                 String categoryName = resultSet.getString("name");
-                logger.info (id +  " - " + categoryName);
+
+                categories.add(new Category(id, categoryName));
             }
 
             statement.close();
@@ -292,5 +293,7 @@ public class JdbcSqliteConnection
         {
             closeDbConnection();
         }
+
+        return categories;
     }
 }

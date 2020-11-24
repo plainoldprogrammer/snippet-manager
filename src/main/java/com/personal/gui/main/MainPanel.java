@@ -60,7 +60,7 @@ public class MainPanel extends JPanel
         // Prepare data from DB.
 
         JdbcSqliteConnection dbConnection = new JdbcSqliteConnection();
-        listCategoriesData = dbConnection.getCategoriesData();
+        listCategoriesData = dbConnection.getCategories();
         logger.info("listCategories on DB: " + listCategoriesData);
 
         JPanel panelCategories = new JPanel();
@@ -101,6 +101,7 @@ public class MainPanel extends JPanel
             Category firstCategory = listCategoriesData.get(0);
             List<Snippet> snippetsInFirstCategory = firstCategory.getListOfSnippets();
 
+            /*
             ListIterator<Snippet> iterator = snippetsInFirstCategory.listIterator();
 
             while (iterator.hasNext())
@@ -127,6 +128,8 @@ public class MainPanel extends JPanel
             {
                 removeSnippetButton.setEnabled(false);
             }
+
+             */
         }
         else
         {
@@ -233,7 +236,7 @@ public class MainPanel extends JPanel
                         addSnippetButton.setEnabled(true);
 
                         dbConnection.createCategory(newCategoryNameTextField.getText());
-                        dbConnection.getCategories();
+                        List<Category> categories = dbConnection.getCategories();
                     }
                 });
 
@@ -326,39 +329,42 @@ public class MainPanel extends JPanel
             }
         });
 
-        listOfSnippets.addListSelectionListener(new ListSelectionListener()
+        if (listOfSnippets != null)
         {
-            @Override
-            public void valueChanged(ListSelectionEvent e)
+            listOfSnippets.addListSelectionListener(new ListSelectionListener()
             {
-                if (!e.getValueIsAdjusting())
+                @Override
+                public void valueChanged(ListSelectionEvent e)
                 {
-                    if (listOfSnippets.getModel().getSize() > 0)
+                    if (!e.getValueIsAdjusting())
                     {
-                        removeSnippetButton.setEnabled(true);
-
-                        if (!listOfSnippets.isSelectionEmpty())
+                        if (listOfSnippets.getModel().getSize() > 0)
                         {
-                            // prevent an infinite loop events between the 'titleOfSelectedSnippet' and 'listOfSnippets'
-                            if (!titleOfSelectedSnippet.getText().equals(listOfSnippets.getSelectedValue().getTitle()))
+                            removeSnippetButton.setEnabled(true);
+
+                            if (!listOfSnippets.isSelectionEmpty())
                             {
-                                titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                                // prevent an infinite loop events between the 'titleOfSelectedSnippet' and 'listOfSnippets'
+                                if (!titleOfSelectedSnippet.getText().equals(listOfSnippets.getSelectedValue().getTitle()))
+                                {
+                                    titleOfSelectedSnippet.setText(listOfSnippets.getSelectedValue().getTitle());
+                                }
+
+                                textEditor.setText(listOfSnippets.getSelectedValue().getCode());
+                                logger.info("id of selected snippet: " + listOfSnippets.getSelectedValue().getId());
                             }
-
-                            textEditor.setText(listOfSnippets.getSelectedValue().getCode());
-                            logger.info("id of selected snippet: " + listOfSnippets.getSelectedValue().getId());
                         }
-                    }
-                    else
-                    {
-                        titleOfSelectedSnippet.setText("");
-                        textEditor.setText("");
-                        removeSnippetButton.setEnabled(false);
-                    }
+                        else
+                        {
+                            titleOfSelectedSnippet.setText("");
+                            textEditor.setText("");
+                            removeSnippetButton.setEnabled(false);
+                        }
 
+                    }
                 }
-            }
-        });
+            });
+        }
 
         addSnippetButton.addActionListener(new ActionListener()
         {
