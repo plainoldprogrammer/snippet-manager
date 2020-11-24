@@ -17,11 +17,9 @@ public class MainWindow extends JFrame
         setLocationRelativeTo(null);
 
         JPanel mainPanel = new MainPanel();
+        getContentPane().add(mainPanel);
 
         JMenuBar menuBar = new MenuBar(((MainPanel) mainPanel).getTextEditor());
         setJMenuBar(menuBar);
-
-        getContentPane().add(mainPanel);
     }
 }
-
