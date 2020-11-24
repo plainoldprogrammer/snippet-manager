@@ -360,7 +360,6 @@ public class MainPanel extends JPanel
                             textEditor.setText("");
                             removeSnippetButton.setEnabled(false);
                         }
-
                     }
                 }
             });
