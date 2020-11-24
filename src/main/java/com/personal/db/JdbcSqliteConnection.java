@@ -23,7 +23,6 @@ public class JdbcSqliteConnection
     {
         try
         {
-            connection = openDbConnection();
             getSnippets();
         }
         catch (Exception e)
@@ -58,6 +57,7 @@ public class JdbcSqliteConnection
     {
         try
         {
+            connection = openDbConnection();
             if (connection != null)
             {
                 Statement statement = connection.createStatement();
@@ -114,6 +114,10 @@ public class JdbcSqliteConnection
             }
         }
         catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
