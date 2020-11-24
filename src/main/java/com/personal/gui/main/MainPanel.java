@@ -24,7 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 import java.awt.Dimension;
-import com.personal.db.JdbcSqliteConnection;
+import com.personal.db.SqliteConnection;
 import com.personal.util.Category;
 import com.personal.util.Snippet;
 
@@ -33,12 +33,11 @@ public class MainPanel extends JPanel
     final Logger logger = LogManager.getLogger(MainPanel.class);
     private JTextArea textEditor = null;
     private JTextField titleOfSelectedSnippet;
-    private List<Category> listCategoriesData;
     private JList<Category> listOfCategories;
     private List<Snippet> listSnippetsData;
     private JList<Snippet> listOfSnippets;
 
-    public MainPanel()
+    public MainPanel() throws Exception
     {
         super();
 
@@ -59,14 +58,12 @@ public class MainPanel extends JPanel
 
         // Prepare data from DB.
 
-        JdbcSqliteConnection dbConnection = new JdbcSqliteConnection();
-        listCategoriesData = dbConnection.getCategories();
-        logger.info("listCategories on DB: " + listCategoriesData);
+        SqliteConnection dbAccess = new SqliteConnection();
 
         JPanel panelCategories = new JPanel();
         panelCategories.setLayout(new BorderLayout());
         panelCategories.setBackground(new Color(216, 216, 216));
-        listOfCategories = new JList(listCategoriesData.toArray());
+        listOfCategories = new JList(dbAccess.getCategories().toArray());
         listOfCategories.setBackground(new Color(216, 216, 216));
         listOfCategories.setSelectedIndex(0);
         panelCategories.add(categoriesLabel, BorderLayout.NORTH);
@@ -96,12 +93,13 @@ public class MainPanel extends JPanel
 
         textEditor = new TextEditor();
 
+        /*
         if (listCategoriesData.size() > 0)
         {
             Category firstCategory = listCategoriesData.get(0);
             List<Snippet> snippetsInFirstCategory = firstCategory.getListOfSnippets();
 
-            /*
+
             ListIterator<Snippet> iterator = snippetsInFirstCategory.listIterator();
 
             while (iterator.hasNext())
@@ -128,12 +126,13 @@ public class MainPanel extends JPanel
             {
                 removeSnippetButton.setEnabled(false);
             }
-            */
+
         }
         else
         {
             listOfSnippets = new JList();
         }
+        */
 
         panelSnippets.add(snippetFilter, BorderLayout.NORTH);
         panelSnippets.add(new JScrollPane(listOfSnippets), BorderLayout.CENTER);
@@ -166,6 +165,7 @@ public class MainPanel extends JPanel
         add(titleAndEditorPanel, BorderLayout.CENTER);
 
 
+        /*
         addCategoryButton.addActionListener(new ActionListener()
         {
             @Override
@@ -246,7 +246,9 @@ public class MainPanel extends JPanel
                 createNewCategoryWindow.setVisible(true);
             }
         });
+        */
 
+        /*
         removeCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -280,12 +282,15 @@ public class MainPanel extends JPanel
                 }
             }
         });
+         */
+
 
         listOfCategories.addListSelectionListener(new ListSelectionListener()
         {
             @Override
             public void valueChanged(ListSelectionEvent e)
             {
+                /*
                 if (!e.getValueIsAdjusting())
                 {
                     Category selectedCategory = listOfCategories.getSelectedValue();
@@ -325,9 +330,16 @@ public class MainPanel extends JPanel
                         }
                     }
                 }
+                */
+                if (!e.getValueIsAdjusting())
+                {
+                    logger.info("Retrieve snippets from " + listOfCategories.getSelectedValue());
+                }
             }
         });
 
+
+        /*
         if (listOfSnippets != null)
         {
             listOfSnippets.addListSelectionListener(new ListSelectionListener()
@@ -363,7 +375,9 @@ public class MainPanel extends JPanel
                 }
             });
         }
+        */
 
+        /*
         addSnippetButton.addActionListener(new ActionListener()
         {
             @Override
@@ -391,7 +405,7 @@ public class MainPanel extends JPanel
 
                 try
                 {
-                    JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                    SqliteConnection jdbcSqliteConnection = new SqliteConnection();
                     int idOfNewSnippet = jdbcSqliteConnection.getLastId() + 1;
                     logger.info("idOfNewSnippet: " + idOfNewSnippet);
                     newSnippet.setId(idOfNewSnippet);
@@ -405,7 +419,9 @@ public class MainPanel extends JPanel
                 }
             }
         });
+        */
 
+        /*
         removeSnippetButton.addActionListener(new ActionListener()
         {
             @Override
@@ -454,7 +470,7 @@ public class MainPanel extends JPanel
 
                 try
                 {
-                    JdbcSqliteConnection sqliteConnection = new JdbcSqliteConnection();
+                    SqliteConnection sqliteConnection = new SqliteConnection();
                     sqliteConnection.deleteSnippet(idOfRemovedSnippet);
                 }
                 catch (Exception ex)
@@ -463,7 +479,9 @@ public class MainPanel extends JPanel
                 }
             }
         });
+        */
 
+        /*
         titleOfSelectedSnippet.getDocument().addDocumentListener(new DocumentListener()
         {
             @Override
@@ -514,7 +532,7 @@ public class MainPanel extends JPanel
 
                     try
                     {
-                        JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                        SqliteConnection jdbcSqliteConnection = new SqliteConnection();
                         logger.info("id of the snippet to update their title: " + listOfSnippets.getSelectedValue().getId());
                         jdbcSqliteConnection.updateTitleOfSnippet(listOfSnippets.getSelectedValue().getId(), listOfSnippets.getSelectedValue().getTitle());
                     }
@@ -531,7 +549,9 @@ public class MainPanel extends JPanel
                 insertUpdate(e);
             }
         });
+        */
 
+        /*
         textEditor.getDocument().addDocumentListener(new DocumentListener()
         {
             @Override
@@ -552,7 +572,7 @@ public class MainPanel extends JPanel
 
                     try
                     {
-                        JdbcSqliteConnection jdbcSqliteConnection = new JdbcSqliteConnection();
+                        SqliteConnection jdbcSqliteConnection = new SqliteConnection();
                         jdbcSqliteConnection.updateCodeSnippet(idOfSelectedSnippet, currentSnippet);
                     }
                     catch (Exception ex)
@@ -568,6 +588,7 @@ public class MainPanel extends JPanel
                 insertUpdate(e);
             }
         });
+        */
     }
 
     public JTextArea getTextEditor()

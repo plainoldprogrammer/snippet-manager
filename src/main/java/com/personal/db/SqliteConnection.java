@@ -13,39 +13,20 @@ import java.util.ArrayList;
 import com.personal.util.Snippet;
 import com.personal.util.Category;
 
-public class JdbcSqliteConnection
+public class SqliteConnection
 {
-    final static Logger logger = LogManager.getLogger(JdbcSqliteConnection.class);
-    private List<Category> categoriesData;
+    final static Logger logger = LogManager.getLogger(SqliteConnection.class);
     private Connection connection;
 
-    public JdbcSqliteConnection()
+    public SqliteConnection()
     {
         try
         {
+            Class.forName("org.sqlite.JDBC");
+            String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
+            connection = DriverManager.getConnection(dbURL);
+
             getSnippets();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private Connection openDbConnection() throws Exception
-    {
-        Class.forName("org.sqlite.JDBC");
-        String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
-        return DriverManager.getConnection(dbURL);
-    }
-
-    private void closeDbConnection()
-    {
-        try
-        {
-            if (connection != null)
-            {
-                connection.close();
-            }
         }
         catch (Exception e)
         {
@@ -57,7 +38,6 @@ public class JdbcSqliteConnection
     {
         try
         {
-            connection = openDbConnection();
             if (connection != null)
             {
                 Statement statement = connection.createStatement();
@@ -103,7 +83,7 @@ public class JdbcSqliteConnection
 
                     logger.info("Categories: " + listOfCategories.size());
 
-                    setCategoriesData(listOfCategories);
+                    // setCategoriesData(listOfCategories);
 
                     statement.close();
                 }
@@ -120,10 +100,6 @@ public class JdbcSqliteConnection
         catch (Exception e)
         {
             e.printStackTrace();
-        }
-        finally
-        {
-            closeDbConnection();
         }
     }
 
@@ -234,64 +210,28 @@ public class JdbcSqliteConnection
         }
     }
 
-    public void setCategoriesData(List<Category> listOfCategories)
+    public void createCategory(String name) throws Exception
     {
-        categoriesData = listOfCategories;
+        String sqlQuery = "INSERT INTO categories(name) VALUES('" + name + "')";
+        logger.info(sqlQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+        preparedStatement.executeUpdate();
     }
 
-    public List<Category> getCategoriesData()
-    {
-        return categoriesData;
-    }
-
-    public void createCategory(String category)
-    {
-        try
-        {
-            connection = openDbConnection();
-            String sqlQuery = "INSERT INTO categories(name) VALUES('" + category + "')";
-            logger.info(sqlQuery);
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.executeUpdate();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            closeDbConnection();
-        }
-    }
-
-    public List<Category> getCategories()
+    public List<Category> getCategories() throws Exception
     {
         List<Category> categories = new ArrayList<Category>();
 
-        try
-        {
-            connection = openDbConnection();
-            String sqlQuery = "SELECT id, name FROM category";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
+        String sqlQuery = "SELECT id, name FROM category";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
 
-            while (resultSet.next())
-            {
-                int id = resultSet.getInt("id");
-                String categoryName = resultSet.getString("name");
-
-                categories.add(new Category(id, categoryName));
-            }
-
-            statement.close();
-        }
-        catch (Exception e)
+        while (resultSet.next())
         {
-            e.printStackTrace();
-        }
-        finally
-        {
-            closeDbConnection();
+            int id = resultSet.getInt("id");
+            String categoryName = resultSet.getString("name");
+
+            categories.add(new Category(id, categoryName));
         }
 
         return categories;

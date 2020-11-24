@@ -16,14 +16,14 @@ public class Program implements Runnable
     {
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.setVisible(true);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-
-        MainWindow mainWindow = new MainWindow();
-        mainWindow.setVisible(true);
     }
 }
 

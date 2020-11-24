@@ -7,7 +7,7 @@ import com.personal.gui.main.menubar.MenuBar;
 
 public class MainWindow extends JFrame
 {
-    public MainWindow()
+    public MainWindow() throws Exception
     {
         super();
 
