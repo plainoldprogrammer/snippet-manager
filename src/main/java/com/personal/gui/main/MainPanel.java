@@ -128,8 +128,7 @@ public class MainPanel extends JPanel
             {
                 removeSnippetButton.setEnabled(false);
             }
-
-             */
+            */
         }
         else
         {

@@ -271,7 +271,7 @@ public class JdbcSqliteConnection
         try
         {
             connection = openDbConnection();
-            String sqlQuery = "SELECT * FROM categories";
+            String sqlQuery = "SELECT id, name FROM category";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
 
