@@ -45,66 +45,53 @@ public class SqliteConnection
         statement.executeUpdate(sqlQueryTableSnippet);
     }
 
-    private void getSnippets()
+    private void getSnippets() throws Exception
     {
-        try
+
+        String sqlQuery = "SELECT DISTINCT category FROM snippets";
+
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+        List<Category> listOfCategories = new ArrayList();
+
+        while (resultSet.next())
         {
-            if (connection != null)
+            String categoryName = resultSet.getString("category");
+            logger.info(categoryName);
+            Category currentCategory = new Category(categoryName);
+
+            String sqlQueryForSnippetsOfACategory = "SELECT id, title, snippet FROM snippets WHERE category = '" + categoryName + "'";
+            logger.info(sqlQueryForSnippetsOfACategory);
+
+            Statement statementForSnippets = connection.createStatement();
+            ResultSet resultSetOfSnippets = statementForSnippets.executeQuery(sqlQueryForSnippetsOfACategory);
+
+            while (resultSetOfSnippets.next())
             {
-                try
-                {
-                    String sqlQuery = "SELECT DISTINCT category FROM snippets";
+                logger.info(resultSetOfSnippets.getString("title"));
 
-                    ResultSet resultSet = statement.executeQuery(sqlQuery);
-                    List<Category> listOfCategories = new ArrayList();
+                String idOfSnippet = resultSetOfSnippets.getString("id");
+                String titleOfSnippet = resultSetOfSnippets.getString("title");
+                String codeSnippet = resultSetOfSnippets.getString("snippet");
 
-                    while (resultSet.next())
-                    {
-                        String categoryName = resultSet.getString("category");
-                        logger.info(categoryName);
-                        Category currentCategory = new Category(categoryName);
+                Snippet currentSnippet = new Snippet(titleOfSnippet, codeSnippet);
+                currentSnippet.setId(Integer.parseInt(idOfSnippet));
+                currentCategory.addSnippet(currentSnippet);
 
-                        String sqlQueryForSnippetsOfACategory = "SELECT id, title, snippet FROM snippets WHERE category = '" + categoryName + "'";
-                        logger.info(sqlQueryForSnippetsOfACategory);
-
-                        Statement statementForSnippets = connection.createStatement();
-                        ResultSet resultSetOfSnippets = statementForSnippets.executeQuery(sqlQueryForSnippetsOfACategory);
-
-                        while (resultSetOfSnippets.next())
-                        {
-                            logger.info(resultSetOfSnippets.getString("title"));
-
-                            String idOfSnippet = resultSetOfSnippets.getString("id");
-                            String titleOfSnippet = resultSetOfSnippets.getString("title");
-                            String codeSnippet = resultSetOfSnippets.getString("snippet");
-
-                            Snippet currentSnippet = new Snippet(titleOfSnippet, codeSnippet);
-                            currentSnippet.setId(Integer.parseInt(idOfSnippet));
-                            currentCategory.addSnippet(currentSnippet);
-
-                            logger.info("current id: " + idOfSnippet);
-                        }
-
-                        listOfCategories.add(currentCategory);
-                        statementForSnippets.close();
-                    }
-
-                    logger.info("Categories: " + listOfCategories.size());
-
-                    // setCategoriesData(listOfCategories);
-
-                    statement.close();
-                }
-                catch (Exception e)
-                {
-                    System.out.println("is NULL");
-                }
+                logger.info("current id: " + idOfSnippet);
             }
+
+            listOfCategories.add(currentCategory);
+            statementForSnippets.close();
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+
+        logger.info("Categories: " + listOfCategories.size());
+
+        // setCategoriesData(listOfCategories);
+
+        statement.close();
+
+
+
     }
 
     public void insertNewSnippetToDB(Category categoryToDB, Snippet snippet) throws Exception
