@@ -17,6 +17,7 @@ public class SqliteConnection
 {
     final static Logger logger = LogManager.getLogger(SqliteConnection.class);
     private Connection connection;
+    private Statement statement;
 
     public SqliteConnection()
     {
@@ -25,7 +26,9 @@ public class SqliteConnection
             Class.forName("org.sqlite.JDBC");
             String dbURL = "jdbc:sqlite:src/main/resources/snippets.db";
             connection = DriverManager.getConnection(dbURL);
+            statement = connection.createStatement();
 
+            createTables();
             getSnippets();
         }
         catch (Exception e)
@@ -34,19 +37,24 @@ public class SqliteConnection
         }
     }
 
+    private void createTables() throws Exception
+    {
+        String sqlQueryTableCategory = "CREATE TABLE IF NOT EXISTS 'category' ('id' INTEGER, 'name' TEXT, PRIMARY KEY('id' AUTOINCREMENT))";
+        String sqlQueryTableSnippet = "CREATE TABLE IF NOT EXISTS 'snippet' ('id' INTEGER, 'title' TEXT, 'code' TEXT, 'category' TEXT, FOREIGN KEY('category') REFERENCES 'category'('name'), PRIMARY KEY('id' AUTOINCREMENT))";
+        statement.executeUpdate(sqlQueryTableCategory);
+        statement.executeUpdate(sqlQueryTableSnippet);
+    }
+
     private void getSnippets()
     {
         try
         {
             if (connection != null)
             {
-                Statement statement = connection.createStatement();
-                String queryTableSnippets = "CREATE TABLE IF NOT EXISTS snippets (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, snippet TEXT, category TEXT)";
-                statement.executeUpdate(queryTableSnippets);
-
-                String sqlQuery = "SELECT DISTINCT category FROM snippets";
                 try
                 {
+                    String sqlQuery = "SELECT DISTINCT category FROM snippets";
+
                     ResultSet resultSet = statement.executeQuery(sqlQuery);
                     List<Category> listOfCategories = new ArrayList();
 
@@ -92,10 +100,6 @@ public class SqliteConnection
                     System.out.println("is NULL");
                 }
             }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
         }
         catch (Exception e)
         {

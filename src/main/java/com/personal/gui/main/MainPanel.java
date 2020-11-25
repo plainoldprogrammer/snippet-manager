@@ -241,7 +241,7 @@ public class MainPanel extends JPanel
             }
         });
 
-        
+
         removeCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
