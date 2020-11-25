@@ -220,7 +220,7 @@ public class SqliteConnection
 
     public void createCategory(String name) throws Exception
     {
-        String sqlQuery = "INSERT INTO categories(name) VALUES('" + name + "')";
+        String sqlQuery = "INSERT INTO category(name) VALUES('" + name + "')";
         logger.info(sqlQuery);
         PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
         preparedStatement.executeUpdate();

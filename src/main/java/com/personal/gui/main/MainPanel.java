@@ -165,7 +165,7 @@ public class MainPanel extends JPanel
         add(titleAndEditorPanel, BorderLayout.CENTER);
 
 
-        /*
+
         addCategoryButton.addActionListener(new ActionListener()
         {
             @Override
@@ -210,32 +210,26 @@ public class MainPanel extends JPanel
                     @Override
                     public void actionPerformed(ActionEvent e)
                     {
-                        Category theNewCategory = new Category(newCategoryNameTextField.getText());
-                        listCategoriesData.add(theNewCategory);
-                        int lastCategoryInserted = listCategoriesData.size() - 1;
-
-                        logger.info("List after add a category:");
-                        DefaultListModel model = new DefaultListModel();
-                        ListIterator<Category> iterator = listCategoriesData.listIterator();
-
-                        while (iterator.hasNext())
+                        try
                         {
-                            Category currentCategory = iterator.next();
-                            model.addElement(currentCategory);
-                            logger.info(" " + currentCategory);
+                            String categoryName = newCategoryNameTextField.getText();
+                            dbAccess.createCategory(categoryName);
+
+                            DefaultListModel model = new DefaultListModel();
+                            List<Category> categories = dbAccess.getCategories();
+
+                            for (Category category : categories)
+                            {
+                                model.addElement(category);
+                            }
+
+                            listOfCategories.setModel(model);
+                            createNewCategoryWindow.setVisible(false);
                         }
-
-                        listOfCategories.setModel(model);
-                        logger.info("index at last category inserted: " + lastCategoryInserted);
-                        listOfCategories.setSelectedIndex(lastCategoryInserted);
-                        createNewCategoryWindow.setVisible(false);
-                        removeCategoryButton.setEnabled(true);
-
-                        // the new category is selected in the gui and theres no one selected
-                        addSnippetButton.setEnabled(true);
-
-                        dbConnection.createCategory(newCategoryNameTextField.getText());
-                        List<Category> categories = dbConnection.getCategories();
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                        }
                     }
                 });
 
@@ -246,16 +240,16 @@ public class MainPanel extends JPanel
                 createNewCategoryWindow.setVisible(true);
             }
         });
-        */
 
-
+        
         removeCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
             {
 				try
 				{
-					dbAccess.removeCategory(listOfCategories.getSelectedValue().getId());
+				    int idCategory = listOfCategories.getSelectedValue().getId();
+					dbAccess.removeCategory(idCategory);
 
 					DefaultListModel model = new DefaultListModel();
 					List<Category> categories = dbAccess.getCategories();
