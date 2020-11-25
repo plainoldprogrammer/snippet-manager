@@ -248,41 +248,31 @@ public class MainPanel extends JPanel
         });
         */
 
-        /*
+
         removeCategoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int selectedCategory = listOfCategories.getSelectedIndex();
-                listCategoriesData.remove(selectedCategory);
+				try
+				{
+					dbAccess.removeCategory(listOfCategories.getSelectedValue().getId());
 
-                logger.info("List after remove a category:");
-                DefaultListModel model = new DefaultListModel();
-                ListIterator<Category> iterator = listCategoriesData.listIterator();
+					DefaultListModel model = new DefaultListModel();
+					List<Category> categories = dbAccess.getCategories();
 
-                while (iterator.hasNext())
-                {
-                    Category currentCategory = iterator.next();
-                    model.addElement(currentCategory);
-                    logger.info(" " + currentCategory);
-                }
+					for (Category category : categories)
+					{
+						model.addElement(category);
+					}
 
-                listOfCategories.setModel(model);
-                addSnippetButton.setEnabled(false);
-
-                if (listCategoriesData.size() == 0)
-                {
-                    removeCategoryButton.setEnabled(false);
-                    DefaultListModel emptyModel = new DefaultListModel();
-                    listOfSnippets.setModel(emptyModel);
-                }
-                else
-                {
-                    listOfCategories.setSelectedIndex(0);
-                }
+					listOfCategories.setModel(model);
+				}
+				catch (Exception ex)
+				{
+					ex.printStackTrace();
+				}
             }
         });
-         */
 
 
         listOfCategories.addListSelectionListener(new ListSelectionListener()

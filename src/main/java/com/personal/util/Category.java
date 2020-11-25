@@ -37,6 +37,16 @@ public class Category
         return name;
     }
 
+    public void setId(int id)
+	{
+		this.id = id;
+	}
+
+	public int getId()
+	{
+		return this.id;
+	}
+
     public void setListOfSnippets(List<Snippet> newListOfSnippets)
     {
         listOfSnippets = newListOfSnippets;

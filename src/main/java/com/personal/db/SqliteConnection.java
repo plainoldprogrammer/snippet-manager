@@ -191,6 +191,14 @@ public class SqliteConnection
         }
     }
 
+    public void removeCategory(int id) throws Exception
+	{
+		String sqlQuery = "DELETE FROM category WHERE id=" + id;
+		PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+		preparedStatement.executeUpdate();
+		preparedStatement.close();
+	}
+
     public void deleteSnippet(int id) throws Exception
     {
         Class.forName("org.sqlite.JDBC");
