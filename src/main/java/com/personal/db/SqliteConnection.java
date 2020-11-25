@@ -39,8 +39,8 @@ public class SqliteConnection
 
     private void createTables() throws Exception
     {
-        String sqlQueryTableCategory = "CREATE TABLE IF NOT EXISTS 'category' ('id' INTEGER, 'name' TEXT, PRIMARY KEY('id' AUTOINCREMENT))";
-        String sqlQueryTableSnippet = "CREATE TABLE IF NOT EXISTS 'snippet' ('id' INTEGER, 'title' TEXT, 'code' TEXT, 'category' TEXT, FOREIGN KEY('category') REFERENCES 'category'('name'), PRIMARY KEY('id' AUTOINCREMENT))";
+        String sqlQueryTableCategory = "CREATE TABLE 'category' ('id' INTEGER, 'name' TEXT, PRIMARY KEY('id' AUTOINCREMENT));";
+        String sqlQueryTableSnippet = "CREATE TABLE 'snippet' ('id' INTEGER, 'title' TEXT, 'code' TEXT, 'categoryId' INTEGER, PRIMARY KEY('id' AUTOINCREMENT), FOREIGN KEY('categoryId') REFERENCES 'category'('id'));";
         statement.executeUpdate(sqlQueryTableCategory);
         statement.executeUpdate(sqlQueryTableSnippet);
     }
